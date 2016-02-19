@@ -1,0 +1,3 @@
+module JsonapiForRails::ActionController
+
+end
