@@ -1,6 +1,10 @@
 require "jsonapi_for_rails/version"
-require "jsonapi_for_rails/action_controller"
+require "jsonapi_for_rails/controller"
+require "jsonapi_for_rails/model"
 
-module JsonapiForRails
-  # Your code goes here...
-end
+# Add 'acts_as_jsonapi_resources' class method to controllers
+ActionController::Metal.send :include, JsonapiForRails::Controller
+
+# Add 'to_jsonapi_hash' instance method to models
+ActiveRecord::Base.send      :include, JsonapiForRails::Model
+
