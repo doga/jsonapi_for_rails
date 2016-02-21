@@ -22,7 +22,7 @@ module JsonapiForRails::Controller
 
 			module InstanceMethods
 				def require_relationship
-					$stderr.puts "JsonapiForRails::Controller::RelationshipFromRequest#require_relationship called" 
+					#$stderr.puts "JsonapiForRails::Controller::RelationshipFromRequest#require_relationship called" 
 					@relationship = received_relationships.first
 					return if @relationship
 

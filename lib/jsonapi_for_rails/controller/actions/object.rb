@@ -67,7 +67,7 @@ module JsonapiForRails::Controller
 				end
 
 				def show
-					$stderr.puts "JsonapiForRails::Controller::Actions::Object#show called" 
+					#$stderr.puts "JsonapiForRails::Controller::Actions::Object#show called" 
 
 					# attributes
 					attributes = @record.attributes.reject do |key, value|

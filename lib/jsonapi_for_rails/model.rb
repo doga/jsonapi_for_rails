@@ -2,7 +2,7 @@ module JsonapiForRails::Model
 	extend ActiveSupport::Concern
 
 	included do
-		$stderr.puts "JsonapiForRails::Model included into #{self}" 
+		#$stderr.puts "JsonapiForRails::Model included into #{self}" 
 
 		# Define instance methods
 		class_exec do

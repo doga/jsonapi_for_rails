@@ -10,12 +10,12 @@ module JsonapiForRails::Controller
 	extend ActiveSupport::Concern
 
 	included do
-		$stderr.puts "JsonapiForRails::Controller included into #{self}" 
+		#$stderr.puts "JsonapiForRails::Controller included into #{self}" 
 	end
 
 	class_methods do
 		def acts_as_jsonapi_resources model: nil
-			$stderr.puts "JsonapiForRails::Controller macro called from #{self}:\n  acts_as_jsonapi_resources(model: #{model or 'nil'})" 
+			#$stderr.puts "JsonapiForRails::Controller macro called from #{self}:\n  acts_as_jsonapi_resources(model: #{model or 'nil'})" 
 
 			include JsonapiForRails::Controller::Utils::Model
 			include JsonapiForRails::Controller::Utils::Render

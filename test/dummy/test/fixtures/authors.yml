@@ -1,0 +1,16 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+jill_treanor:
+  name: Jill Treanor
+  email: jill.treanor@theguardian.com
+  phone: +44 555 5555
+
+press_association:
+  name: Press Association
+  email: 
+  phone: 
+
+melanie_wilkinson:
+  name: Melanie Wilkinson
+  email: melanie.wilkinson@theguardian.com
+  phone: +44 555 4444

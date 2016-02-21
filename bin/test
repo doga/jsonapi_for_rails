@@ -1,4 +1,18 @@
 #!/usr/bin/env ruby.ruby2.3
+
+=begin 
+
+Create a link to dummy application fixtures in the same directory as jsonapi_for_rails_test.rb
+
+Then run `bin/test` from plugin directory (parent of this 'bin' directory).
+
+This will execute following tests:
+* Plugin tests in './test/json_api_for_rails_test.rb'
+* Application tests in './test/dummy/test'
+
+=end
+
+
 $: << File.expand_path(File.expand_path('../../test', __FILE__))
 
 require 'bundler/setup'

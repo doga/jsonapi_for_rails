@@ -10,7 +10,7 @@ module JsonapiForRails::Controller
 			module InstanceMethods
 				# GET
 				def relationship_show
-					$stderr.puts "JsonapiForRails::Controller::Actions::Relationship#relationship_show called" 
+					#$stderr.puts "JsonapiForRails::Controller::Actions::Relationship#relationship_show called" 
 					rel = @record.send @relationship[:definition][:name]
 
 					@json = nil

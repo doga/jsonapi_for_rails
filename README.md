@@ -26,6 +26,7 @@ Next, enable JSONAPI in a parent class of your API controllers.
 # app/controllers/application_controller.rb
 
 class ApplicationController < ActionController::Base # or ActionController::API
+
   # Enable JSONAPI
   acts_as_jsonapi_resources
 
@@ -38,6 +39,7 @@ If only some of your controllers are JSONAPI controllers, then create a parent c
 ```bash
 $ cat > app/controllers/jsonapi_resources_controller.rb
 class JsonapiResourcesController < ApplicationController
+
   # Enable JSONAPI
   acts_as_jsonapi_resources
 
@@ -98,7 +100,7 @@ end
 ### Client permissions
 By default, all API end-points are accessible to all clients. Client authentication and read/write permissions are left as an exercice to the developer.
 
-Provided [renderers](lib/jsonapi_for_rails/controller/utils/render.rb) can be used to implement `before_action` controller methods that handle authentication and permissions.
+Provided [renderers](lib/jsonapi_for_rails/controller/utils/render.rb) can be used to implement `before_action` controller methods if needed.
 
 ## Installation
 Add this line to your application's Gemfile:

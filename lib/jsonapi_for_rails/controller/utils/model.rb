@@ -3,7 +3,7 @@ module JsonapiForRails::Controller
 	module Utils
 		module Model
 			def self.included receiver
-				$stderr.puts "JsonapiForRails::Controller::ModelUtils included into #{receiver}" 
+				#$stderr.puts "JsonapiForRails::Controller::ModelUtils included into #{receiver}" 
 				receiver.send :include, InstanceMethods
 				run_macros receiver
 			end

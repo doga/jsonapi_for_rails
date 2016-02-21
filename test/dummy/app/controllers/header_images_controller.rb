@@ -1,0 +1,2 @@
+class HeaderImagesController < ApplicationController
+end

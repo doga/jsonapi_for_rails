@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+bank_image:
+  url: http://cdn.theguardian.com/images/bank.jpg
+  article: uk_bank_and_bonuses
+
+volvo_image:
+  url: http://cdn.theguardian.com/images/volvo.jpg
+  article: volvo_recalls_cars
+
+barclays_image:
+  url: http://cdn.theguardian.com/images/barclays.jpg
+  article: barclays_investment_banking_boss_leaves
+
+boot_image:
+  url: http://cdn.theguardian.com/images/boot.jpg
+  article: suede_boots

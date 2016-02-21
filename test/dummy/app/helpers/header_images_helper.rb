@@ -1,0 +1,2 @@
+module HeaderImagesHelper
+end

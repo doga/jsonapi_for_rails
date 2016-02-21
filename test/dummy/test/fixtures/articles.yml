@@ -1,0 +1,55 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+uk_bank_and_bonuses:
+  title: UK bank pay and bonuses in the spotlight as results season starts
+  content: >
+    The pay deals handed to the bosses of Britain’s biggest banks will be in focus this week when they report their results for 2015, at a time when bank shares have been hit by fears of renewed financial crisis.
+    
+    Investors will be scrutinising the bonuses handed out staff - it has already been calculated the major high street banks could hand out £5bn between them - and the dividends paid out to shareholders.
+
+    The results are being published at a time when bank shares have been under pressure over fears that a slowdown in China could have severe knock-on effects for global growth, while sustained low or negative interest rates are harming banks’ long-term profitability. Scandals such as the payment protection insurance mis-selling and the subprime mortgages in the US continue to weigh on the sector.
+
+    Bailed out Royal Bank of Scotland will report the full extent of an eighth successive year of annual losses and is expected to disclose higher pay for its chief executive, Ross McEwan, of around £3m.
+
+    HSBC, which last week confirmed it would keep its headquarters in the UK, kicks off the reporting season on Monday, followed by Standard Chartered, Lloyds Banking Group and RBS, with Barclays the week after.
+  author: jill_treanor
+  tags: business, uk
+
+volvo_recalls_cars:
+  title: Volvo recalls 59,000 cars over software glitch 
+  content: >
+    Volvo is recalling 59,000 cars over faulty software that can briefly shut down the engine, including more than 7,000 in the UK.
+
+    The recall affects five-cylinder diesel models S60, V60, XC60, V70 and XC70 built from mid-2015.
+
+    Owners of the Swedish cars are being sent letters directly, asking them to take their vehicles to their local dealership for a 30-minute no-fee fix.
+
+    The cars are being recalled across 40 markets, but those affected have been sold mainly in Sweden, Britain and Germany.
+
+    Group spokesman Stefan Elfstrom said that the glitch can be “unpleasant” but the company has no information about any accidents caused as a result.
+
+    Both the engine and electric system start up again immediately after shutting down.
+  author: press_association
+  tags: business
+
+barclays_investment_banking_boss_leaves:
+  title: Barclays' investment banking boss leaves
+  content: >
+    Barclays’ investment banking arm is facing further upheaval following the departure of its current boss, Tom King.
+
+    King’s future had been the subject of City speculation since July when he had threatened to leave in a row over the future of the investment bank. Instead, Antony Jenkins, chief executive of the Barclays group, was forced out.
+
+    King, 55, intends to retire on 4 March, after running the investment banking business for two years. King, who is based in New York, is said to be leaving because of UK rules seeking to hold senior managers to account.
+
+    The investment bank was built by Bob Diamond, who rose to become chief executive of the entire bank before leaving in the wake of the Libor-rigging crisis in 2012. Once the powerhouse of the bank, the division has proved controversial over it staff bonuses and ifor problems trying to comply with new rules requiring a ringfence between high street and investment banking operations.
+
+    On announcing his retirement, King said: “After nearly 25 years in my career, and having now seen the investment bank through a period of extraordinary change and on to a solid footing for the future, I feel the moment is right for me to pass the baton.”
+  author: jill_treanor
+  tags: business, uk
+
+suede_boots:
+  title: "Suede boots: 10 of the best – in pictures"
+  content: >
+    Cowboy-fringed, buckled or laced, heeled or flat, there are many different ways to rock this perennial 
+  author: melanie_wilkinson
+  tags: fashion

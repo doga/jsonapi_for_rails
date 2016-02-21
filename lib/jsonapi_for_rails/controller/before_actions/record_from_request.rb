@@ -4,7 +4,7 @@ module JsonapiForRails::Controller
 		module RecordFromRequest
 
 			def self.included receiver
-				$stderr.puts "JsonapiForRails::Controller::RecordFromRequest included into #{receiver}" 
+				#$stderr.puts "JsonapiForRails::Controller::RecordFromRequest included into #{receiver}" 
 				receiver.send :include, InstanceMethods
 				run_macros receiver
 			end
@@ -21,7 +21,7 @@ module JsonapiForRails::Controller
 
 			module InstanceMethods
 				def require_record
-					$stderr.puts "JsonapiForRails::Controller::RecordFromRequest#require_record called" 
+					#$stderr.puts "JsonapiForRails::Controller::RecordFromRequest#require_record called" 
 					if params[:relationship] 
 						# relationship action
 						@record = model_class.find_by_id params["#{model_class_name.downcase}_id"].to_i

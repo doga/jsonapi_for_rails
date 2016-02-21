@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+uk:
+  name: UK
+
+business:
+  name: Business
+
+fashion:
+  name: Fashion
