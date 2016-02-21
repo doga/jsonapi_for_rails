@@ -1,5 +1,5 @@
 # JsonapiForRails
-A [Rails](http://rubyonrails.org/) plugin for providing a [JSONAPI v1.0](http://jsonapi.org/format/1.0/) API from your application with very little coding.
+A [Rails](http://rubyonrails.org/) 5+ plugin for providing a [JSONAPI v1.0](http://jsonapi.org/format/1.0/) API from your application with very little coding.
 
 ## Usage
 
@@ -25,20 +25,7 @@ Next, enable JSONAPI in a parent class of your API controllers.
 ```ruby
 # app/controllers/application_controller.rb
 
-# Regular Rails application
-class ApplicationController < ActionController::Base
-  # Enable JSONAPI
-  acts_as_jsonapi_resources
-
-  # ...
-end
-```
-
-```ruby
-# app/controllers/application_controller.rb
-
-# API-only Rails application
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::Base # or ActionController::API
   # Enable JSONAPI
   acts_as_jsonapi_resources
 
@@ -111,7 +98,7 @@ end
 ### Client permissions
 By default, all API end-points are accessible to all clients. Client authentication and read/write permissions are left as an exercice to the developer.
 
-Provided [renderers](jsonapi_for_rails/lib/jsonapi_for_rails/controller/utils/render.rb) can be used to implement `before_action` controller methods that handle authentication and permissions.
+Provided [renderers](lib/jsonapi_for_rails/controller/utils/render.rb) can be used to implement `before_action` controller methods that handle authentication and permissions.
 
 ## Installation
 Add this line to your application's Gemfile:
