@@ -1,11 +1,11 @@
 # JsonapiForRails
-Provide a [JSONAPI v1.0](http://jsonapi.org/format/1.0/) API from your Rails application with very little coding.
+A [Rails](http://rubyonrails.org/) plugin for providing a [JSONAPI v1.0](http://jsonapi.org/format/1.0/) API from your application with very little coding.
 
 ## Usage
 
 ### Controllers
 
-Generate a controller for each model that will be accessible from your API. Controller names need to be the plural version of your model names.
+First, generate a controller for each model that will be accessible from your API. Controller names need to be the plural version of your model names.
 
 ```bash
 $ # Go to the root directory of your existing Rails application
@@ -20,7 +20,7 @@ $ bin/rails generate controller authors
 $ bin/rails generate controller articles
 ```
 
-Enable JSONAPI in a parent class of your API controllers. 
+Next, enable JSONAPI in a parent class of your API controllers. 
 
 ```ruby
 # app/controllers/application_controller.rb
@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   # Enable JSONAPI
   acts_as_jsonapi_resources
 
-  #...
+  # ...
 end
 ```
 
@@ -42,7 +42,7 @@ class ApplicationController < ActionController::API
   # Enable JSONAPI
   acts_as_jsonapi_resources
 
-  #...
+  # ...
 end
 ```
 
@@ -54,8 +54,7 @@ class JsonapiResourcesController < ApplicationController
   # Enable JSONAPI
   acts_as_jsonapi_resources
 
-  #...
-
+  # ...
 end
 ```
 
@@ -84,31 +83,35 @@ Generate your API routes:
 # config/routes.rb
 
 Rails.application.routes.draw do
-	# ...
+  # ...
 
-	# JSONAPI routes
-	scope '/api/v1' do # Optional scoping
+  # JSONAPI routes
+  scope '/api/v1' do # Optional scoping
 
-		[ # List of your API controllers
-			:authors, :articles
-		].each do |resources_name|
-			resources resources_name do
-				controller resources_name do
-					get     'relationships/:relationship', action: "relationship_show"
-					patch   'relationships/:relationship', action: "relationship_update"
-					post    'relationships/:relationship', action: "relationship_add"
-					delete  'relationships/:relationship', action: "relationship_remove"
-				end
-			end
-		end
+    [ # List of your API controllers
+      :authors, :articles
+    ].each do |resources_name|
+      resources resources_name do
+        controller resources_name do
+          get     'relationships/:relationship', action: "relationship_show"
+          patch   'relationships/:relationship', action: "relationship_update"
+          post    'relationships/:relationship', action: "relationship_add"
+          delete  'relationships/:relationship', action: "relationship_remove"
+        end
+      end
+    end
 
-	end
+  end
 
-	# ...
+  # ...
 end
 
 ```
 
+### Client permissions
+By default, all API end-points are accessible to all clients. Client authentication and read/write permissions are left as an exercice to the developer.
+
+Provided [renderers](jsonapi_for_rails/lib/jsonapi_for_rails/controller/utils/render.rb) can be used to implement `before_action` controller methods that handle authentication and permissions.
 
 ## Installation
 Add this line to your application's Gemfile:
