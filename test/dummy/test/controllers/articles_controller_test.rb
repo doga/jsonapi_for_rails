@@ -21,7 +21,11 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
   test "get article"  do
     get article_path(articles(:uk_bank_and_bonuses)), {
-      params: {include: 'author,tags'},
+      params: {
+        include:              'author,tags',
+        'fields[articles]' => 'title',
+        'fields[authors]'  => 'name,email'
+      },
       headers: {},
       xhr: true
     }

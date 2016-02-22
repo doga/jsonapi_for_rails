@@ -26,12 +26,12 @@ module JsonapiForRails::Controller
 						# attributes
 						attrs = received_attributes
 						if attrs
-							if @record
+							if @jsonapi_record
 								# update
-								@record.update! attrs
+								@jsonapi_record.update! attrs
 							else
 								# create
-								@record = model_class.create! attrs
+								@jsonapi_record = model_class.create! attrs
 							end
 						end
 
@@ -39,16 +39,16 @@ module JsonapiForRails::Controller
 						received_relationships.each do |relationship|
 							# to-one
 							if relationship[:definition][:type] == :to_one
-								@record.send :"#{relationship[:definition][:name]}=", relationship[:params][:data]
+								@jsonapi_record.send :"#{relationship[:definition][:name]}=", relationship[:params][:data]
 								next
 							end
 
 							# to-many
-							@record.send(relationship[:definition][:name]).send :clear # initialize the relation
+							@jsonapi_record.send(relationship[:definition][:name]).send :clear # initialize the relation
 							
 							relationship[:params][:data].each do |item|
 								object = relationship[:receiver][:class].find_by_id item[:id]
-								@record.send(relationship[:definition][:name]).send :<<, object
+								@jsonapi_record.send(relationship[:definition][:name]).send :<<, object
 							end
 						end
 					rescue NameError => e
@@ -58,7 +58,7 @@ module JsonapiForRails::Controller
 						return
 					rescue 
 						# error when creating relationship?
-						@record.destroy if @record 
+						@jsonapi_record.destroy if @jsonapi_record 
 
 						render_error 500, "Record could not be created."
 						return
@@ -68,9 +68,10 @@ module JsonapiForRails::Controller
 
 				def show
 					$stderr.puts "SHOW params: #{params.inspect} #{params[:include]}" 
-					@json = @record.to_jsonapi_hash
+					@json = @jsonapi_record.to_jsonapi_hash
 
 					# include resources
+					# TODO: relationship paths when including resources (http://jsonapi.org/format/1.0/#fetching-includes)
 					if params[:include] and @json[:data][:relationships]
 						$stderr.puts "params[:include]: #{params[:include]}" 
 						@json[:include] = []

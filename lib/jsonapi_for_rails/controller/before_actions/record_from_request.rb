@@ -24,12 +24,12 @@ module JsonapiForRails::Controller
 					#$stderr.puts "JsonapiForRails::Controller::RecordFromRequest#require_record called" 
 					if params[:relationship] 
 						# relationship action
-						@record = model_class.find_by_id params["#{model_class_name.downcase}_id"].to_i
+						@jsonapi_record = model_class.find_by_id params["#{model_class_name.downcase}_id"].to_i
 					else
 						# CRUD action
-						@record = model_class.find_by_id params[:id].to_i
+						@jsonapi_record = model_class.find_by_id params[:id].to_i
 					end
-					return if @record
+					return if @jsonapi_record
 
 					render_error 401, "Bad request."
 				end
