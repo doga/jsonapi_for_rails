@@ -1,7 +1,7 @@
 module JsonapiForRails::Controller
 
 	module BeforeActions
-		module RelationshipFromRequest
+		module Relationship
 
 			def self.included receiver
 				receiver.send :include, InstanceMethods
@@ -10,19 +10,19 @@ module JsonapiForRails::Controller
 
 			def self.run_macros receiver
 				receiver.instance_exec do 
-					before_action :require_relationship, only: [
+					before_action :jsonapi_require_relationship, only: [
 						:relationship_show,
 						:relationship_update,
 						:relationship_add,
 						:relationship_remove
 					]
-					private :require_relationship
+					private :jsonapi_require_relationship
 				end
 			end
 
 			module InstanceMethods
-				def require_relationship
-					#$stderr.puts "JsonapiForRails::Controller::RelationshipFromRequest#require_relationship called" 
+				def jsonapi_require_relationship
+					#$stderr.puts "JsonapiForRails::Controller::RelationshipFromRequest#jsonapi_require_relationship called" 
 					@jsonapi_relationship = received_relationships.first
 					return if @jsonapi_relationship
 

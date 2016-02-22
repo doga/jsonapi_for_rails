@@ -1,7 +1,7 @@
 module JsonapiForRails::Controller
 
 	module BeforeActions
-		module RecordFromRequest
+		module Record
 
 			def self.included receiver
 				#$stderr.puts "JsonapiForRails::Controller::RecordFromRequest included into #{receiver}" 
@@ -11,20 +11,20 @@ module JsonapiForRails::Controller
 
 			def self.run_macros receiver
 				receiver.instance_exec do 
-					before_action :require_record, except: [
+					before_action :jsonapi_require_record, except: [
 						:index, 
 						:create
 					]
-					private :require_record
+					private :jsonapi_require_record
 				end
 			end
 
 			module InstanceMethods
-				def require_record
-					#$stderr.puts "JsonapiForRails::Controller::RecordFromRequest#require_record called" 
+				def jsonapi_require_record
+					#$stderr.puts "JsonapiForRails::Controller::RecordFromRequest#jsonapi_require_record called" 
 					if params[:relationship] 
 						# relationship action
-						@jsonapi_record = model_class.find_by_id params["#{model_class_name.downcase}_id"].to_i
+						@jsonapi_record = model_class.find_by_id params["#{model_class_name.underscore}_id"].to_i
 					else
 						# CRUD action
 						@jsonapi_record = model_class.find_by_id params[:id].to_i

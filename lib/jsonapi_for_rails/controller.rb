@@ -1,7 +1,8 @@
 require "jsonapi_for_rails/controller/utils/model"
 require "jsonapi_for_rails/controller/utils/render"
-require "jsonapi_for_rails/controller/before_actions/record_from_request"
-require "jsonapi_for_rails/controller/before_actions/relationship_from_request"
+#require "jsonapi_for_rails/controller/before_actions/sparse_fieldsets"
+require "jsonapi_for_rails/controller/before_actions/record"
+require "jsonapi_for_rails/controller/before_actions/relationship"
 require "jsonapi_for_rails/controller/actions/object"
 require "jsonapi_for_rails/controller/actions/relationship"
 
@@ -19,8 +20,9 @@ module JsonapiForRails::Controller
 
 			include JsonapiForRails::Controller::Utils::Model
 			include JsonapiForRails::Controller::Utils::Render
-			include JsonapiForRails::Controller::BeforeActions::RecordFromRequest
-			include JsonapiForRails::Controller::BeforeActions::RelationshipFromRequest
+			#include JsonapiForRails::Controller::BeforeActions::SparseFieldsets
+			include JsonapiForRails::Controller::BeforeActions::Record
+			include JsonapiForRails::Controller::BeforeActions::Relationship
 			include JsonapiForRails::Controller::Actions::Object
 			include JsonapiForRails::Controller::Actions::Relationship
 
