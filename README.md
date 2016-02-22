@@ -3,9 +3,9 @@ A [Rails](http://rubyonrails.org/) 5+ plugin for providing a [JSONAPI v1.0](http
 
 ## Usage
 
-### Controllers
+### 1. Set up one API controller per model
 
-First, generate a controller for each model that will be accessible from your API. Controller names need to be the plural version of your model names.
+Generate a controller for each model that will be accessible from your API. Controller names need to be the plural version of your model names.
 
 ```bash
 $ # Go to the root directory of your existing Rails application
@@ -20,7 +20,7 @@ $ bin/rails generate controller authors
 $ bin/rails generate controller articles
 ```
 
-Next, enable JSONAPI in a parent class of your API controllers. 
+Then enable JSONAPI in a parent class of your API controllers. 
 
 ```ruby
 # app/controllers/application_controller.rb
@@ -54,19 +54,12 @@ end
 class AuthorsController < JsonapiResourcesController
   # ...
 end
+
+# Do the same with ArticlesController
 ```
 
-```ruby
-# app/controllers/articles_controller.rb
-
-# Change the API controller's parent class
-class ArticlesController < JsonapiResourcesController
-  # ...
-end
-```
-
-### Routes
-Generate your API routes:
+### 2. Configure API controller routes
+Update your application routes as follows:
 
 ```ruby
 # config/routes.rb
@@ -74,10 +67,9 @@ Generate your API routes:
 Rails.application.routes.draw do
   # ...
 
-  # JSONAPI routes
   scope '/api/v1' do # Optional scoping
 
-    [ # List of your API controllers
+    [ # List your API controllers here
       :authors, :articles
     ].each do |resources_name|
       resources resources_name do
