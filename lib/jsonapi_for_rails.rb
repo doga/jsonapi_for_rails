@@ -1,3 +1,7 @@
+
+# TODO: change @record       to @jsonapi_record
+# TODO: change @relationship to @jsonapi_relationship
+
 require "jsonapi_for_rails/version"
 require "jsonapi_for_rails/controller"
 require "jsonapi_for_rails/model"

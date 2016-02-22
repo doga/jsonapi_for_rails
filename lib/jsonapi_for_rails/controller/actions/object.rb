@@ -13,7 +13,7 @@ module JsonapiForRails::Controller
 					@json = {data: []}
 					model_class.all.each do |record|
 						@json[:data] << {
-							type: record.class.to_s.pluralize.downcase, # TODO: factor out type generation from class
+							type: record.class.to_s.underscore.pluralize, # TODO: factor out type generation from class
 							id:   record.id
 						}
 					end
@@ -67,7 +67,40 @@ module JsonapiForRails::Controller
 				end
 
 				def show
+					$stderr.puts "SHOW params: #{params.inspect} #{params[:include]}" 
 					@json = @record.to_jsonapi_hash
+
+					# include resources
+					if params[:include] and @json[:data][:relationships]
+						$stderr.puts "params[:include]: #{params[:include]}" 
+						@json[:include] = []
+						rel_names = params[:include].split(',').map{|rel| rel.strip.to_sym }
+						rel_names.each do |rel_name|
+							$stderr.puts "rel_name: #{rel_name}" 
+							rel = @json[:data][:relationships][rel_name]
+							next unless rel
+							rel = rel[:data]
+							$stderr.puts "rel: #{rel}" 
+							next unless rel
+							rel = [rel] if rel.kind_of?(Hash)
+							rel.each do |r|
+								$stderr.puts "r: #{r.inspect}" 
+								klass = nil
+								begin
+									klass = r[:type].singularize.camelize.constantize
+									$stderr.puts "klass: #{klass}" 
+								rescue NameError => e
+									$stderr.puts "erro: #{e}" 
+									next									
+								end
+								r = klass.find_by_id r[:id]
+								next unless r
+								$stderr.puts "#{r.inspect}" 
+								@json[:include] << r.to_jsonapi_hash
+							end
+						end
+					end
+
 					render_json @json
 				end
 
@@ -131,7 +164,7 @@ module JsonapiForRails::Controller
 							name: association.name,
 							type: type,
 							receiver: {
-								type: association.klass.to_s.pluralize.downcase,
+								type: association.klass.to_s.underscore.pluralize,
 								class: association.klass.to_s.constantize
 							}
 						}
