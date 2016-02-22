@@ -24,7 +24,6 @@ Then enable JSONAPI in a parent class of your API controllers.
 
 ```ruby
 # app/controllers/application_controller.rb
-
 class ApplicationController < ActionController::Base # or ActionController::API
 
   # Enable JSONAPI
@@ -38,9 +37,8 @@ If only some of your controllers are JSONAPI controllers, then create a parent c
 
 ```bash
 $ cat > app/controllers/jsonapi_resources_controller.rb
-class JsonapiResourcesController < ApplicationController
 
-  # Enable JSONAPI
+class JsonapiResourcesController < ApplicationController
   acts_as_jsonapi_resources
 
   # ...
@@ -58,17 +56,15 @@ end
 # Do the same with ArticlesController
 ```
 
-### 2. Configure API controller routes
+### 2. Configure your API controller routes
 Update your application routes as follows:
 
 ```ruby
 # config/routes.rb
-
 Rails.application.routes.draw do
   # ...
 
   scope '/api/v1' do # Optional scoping
-
     [ # List your API controllers here
       :authors, :articles
     ].each do |resources_name|
@@ -81,11 +77,28 @@ Rails.application.routes.draw do
         end
       end
     end
-
   end
 
   # ...
 end
+
+```
+
+### 3. Verify your setup
+After populating your database and launching the server with the `bin/rails server` command, you can issue some HTTP requests to your API and verify the correctness of the responses.
+
+```bash
+$ # Get the list of articles
+$ curl 'http://localhost:3000/api/v1/articles'
+{"data":[{"type":"articles","id":184578894},{"type":"articles","id":388548390},{"type":"articles","id":618037523},{"type":"articles","id":994552601}]}
+$
+$ # Get an article
+$ curl 'http://localhost:3000/api/v1/articles/184578894'
+{"data":{"type":"articles","id":618037523,"attributes":{"title":"UK bank pay and bonuses in the spotlight as results season starts","content":"The pay deals handed to the bosses of Britain’s biggest banks will be in focus ...","created_at":"2016-02-22T16:57:43.401Z","updated_at":"2016-02-22T16:57:43.401Z"},"relationships":{"author":{"data":{"type":"authors","id":1023487079}}}}}
+$
+$ # Get only the title of an article, include the author name
+$ curl 'http://localhost:3000/api/v1/articles/184578894?filter%5Barticles%5D=title,author;include=author;filter%5Bauthors%5D=name'
+{"data":{"type":"articles","id":618037523,"attributes":{"title":"UK bank pay and bonuses in the spotlight as results season starts"},"relationships":{"author":{"data":{"type":"authors","id":1023487079}}}},"include":[{"data":{"type":"authors","id":1023487079,"attributes":{"name":"..."},"relationships":{}}}]}
 
 ```
 

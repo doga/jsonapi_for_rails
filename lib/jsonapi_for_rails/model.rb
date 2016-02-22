@@ -66,9 +66,11 @@ module JsonapiForRails::Model
 
 				# message
 				{
+=begin
 					meta: {
 						generated_by_class: "#{self.class}"
 					},
+=end
 					data: {
 						type:       model_type,
 						id:         self.id,

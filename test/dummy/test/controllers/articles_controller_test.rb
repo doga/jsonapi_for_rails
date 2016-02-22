@@ -7,8 +7,10 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+    #$stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
     #$stderr.puts "#{json}" 
+
     assert          json,               "no json response"
     refute          json[:errors],      'response is error'
     assert_kind_of  Array, json[:data],        "response is not articles"
@@ -20,18 +22,23 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "get article"  do
+    $stderr.puts "22222222222222222222222222222222222" 
     get article_path(articles(:uk_bank_and_bonuses)), {
       params: {
-        include:              'author,tags',
-        'fields[articles]' => 'title,author,tags',
-        'fields[authors]'  => 'name,email'
+=begin
+        'fields[articles]' => 'title,author',
+        include:              'author',
+        'fields[authors]'  => 'name'
+=end
       },
       headers: {},
       xhr: true
     }
     assert_response :success
+    $stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
-    $stderr.puts "#{json}" 
+    #$stderr.puts "#{json}" 
+    $stderr.puts "22222222222222222222222222222222222" 
     
     assert json
     assert json[:data]
