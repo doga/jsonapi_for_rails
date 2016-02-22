@@ -67,36 +67,27 @@ module JsonapiForRails::Controller
 				end
 
 				def show
-					$stderr.puts "SHOW params: #{params.inspect} #{params[:include]}" 
 					@json = @jsonapi_record.to_jsonapi_hash
 
 					# include resources
 					# TODO: relationship paths when including resources (http://jsonapi.org/format/1.0/#fetching-includes)
-					if params[:include] and @json[:data][:relationships]
-						$stderr.puts "params[:include]: #{params[:include]}" 
+					if @jsonapi_include.size>0 and @json[:data][:relationships]
 						@json[:include] = []
-						rel_names = params[:include].split(',').map{|rel| rel.strip.to_sym }
-						rel_names.each do |rel_name|
-							$stderr.puts "rel_name: #{rel_name}" 
+						@jsonapi_include.each do |rel_name|
 							rel = @json[:data][:relationships][rel_name]
 							next unless rel
 							rel = rel[:data]
-							$stderr.puts "rel: #{rel}" 
 							next unless rel
 							rel = [rel] if rel.kind_of?(Hash)
 							rel.each do |r|
-								$stderr.puts "r: #{r.inspect}" 
 								klass = nil
 								begin
 									klass = r[:type].singularize.camelize.constantize
-									$stderr.puts "klass: #{klass}" 
 								rescue NameError => e
-									$stderr.puts "erro: #{e}" 
 									next									
 								end
 								r = klass.find_by_id r[:id]
 								next unless r
-								$stderr.puts "#{r.inspect}" 
 								@json[:include] << r.to_jsonapi_hash
 							end
 						end
