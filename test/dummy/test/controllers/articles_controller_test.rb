@@ -7,7 +7,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    #$stderr.puts "#{response.body}" 
+    $stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
     #$stderr.puts "#{json}" 
 
@@ -24,11 +24,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   test "get article"  do
     get article_path(articles(:uk_bank_and_bonuses)), {
       params: {
-=begin
         'fields[articles]' => 'title,author',
         include:              'author',
         'fields[authors]'  => 'name'
-=end
       },
       headers: {},
       xhr: true

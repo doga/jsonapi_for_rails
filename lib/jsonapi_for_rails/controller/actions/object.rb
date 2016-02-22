@@ -79,14 +79,11 @@ module JsonapiForRails::Controller
 						@jsonapi_include.each do |rel_name|
 							rel = @json[:data][:relationships][rel_name]
 							next unless rel
-							$stderr.puts "rel: #{rel}" 
 							rel = rel[:data]
 							next unless rel
 							rel = [rel] if rel.kind_of?(Hash)
 							rel.each do |r|
-								$stderr.puts "including: #{r}" 
 								type = r[:type].to_sym
-								$stderr.puts "@jsonapi_sparse_fieldsets[#{type}]: #{@jsonapi_sparse_fieldsets[type]}" 
 								klass = nil
 								begin
 									klass = r[:type].singularize.camelize.constantize

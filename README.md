@@ -105,18 +105,16 @@ $ curl 'http://localhost:3000/api/v1/articles/184578894?filter%5Barticles%5D=tit
 ```
 
 ## Modifying the default API behaviour
-By default, all API end-points are accessible to all clients.
-
-Provided [renderers](lib/jsonapi_for_rails/controller/utils/render.rb) can be used to implement `before_action` controller methods if needed.
+By default, all API end-points are accessible to all clients, and all end-points behave the same way for all clients. In a real-world setting, you may want to restrict access to an end-point and/or change the behaviour of an end-point depending on the client. 
 
 ### Client authentication
-TODO
+Clients can be authenticated inside a `before_action` method in your API controller. Controller instance variable names starting with the `@jsonapi_` prefix are reserved by `jsonapi_for_rails`, so try to avoid those.
 
-### Client permissions
-TODO
+### Access control
+Access control for authenticated and unauthenticated users can be implemented inside a `before_action` method in your API controller.
 
 ### Overriding an API end-point
-TODO
+The `bin/rails routes` command will show you the end-points that `jsonapi_for_rails` defines. In order to change the behaviour of an action, you can define an action with the same name inside an API controller. This does not mean that you will start from scratch, though. `jsonapi_for_rails` defines the `ActiveRecord::Base#to_jsonapi_hash` model instance method that returns a Hash that can serve as a starting point for implementing a `show` action.
 
 ## Implementation status
 * [Inclusion of related resources](http://jsonapi.org/format/1.0/#fetching-includes) is currently only implemented for resource requests that return a single resource. 
