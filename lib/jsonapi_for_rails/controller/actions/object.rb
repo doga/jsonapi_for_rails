@@ -70,7 +70,7 @@ module JsonapiForRails::Controller
 					@json = @jsonapi_record.to_jsonapi_hash(
 						@jsonapi_sparse_fieldsets[model_type]
 					)
-					$stderr.puts "#{@json}" 
+					#$stderr.puts "#{@json}" 
 
 					# Include resources
 					# TODO: relationship paths when including resources (http://jsonapi.org/format/1.0/#fetching-includes)

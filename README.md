@@ -65,6 +65,7 @@ Rails.application.routes.draw do
   # ...
 
   scope '/api/v1' do # Optional scoping
+
     [ # List your API controllers here
       :authors, :articles
     ].each do |resources_name|
@@ -77,6 +78,7 @@ Rails.application.routes.draw do
         end
       end
     end
+
   end
 
   # ...
@@ -85,7 +87,7 @@ end
 ```
 
 ### 3. Verify your setup
-After populating your database and launching the server with the `bin/rails server` command, you can issue some HTTP requests to your API and verify the correctness of the responses.
+After populating your database and launching the built-in Rails server with the `bin/rails server` command, you can issue some HTTP requests to your API and verify the correctness of the responses.
 
 ```bash
 $ # Get the list of articles
@@ -102,10 +104,27 @@ $ curl 'http://localhost:3000/api/v1/articles/184578894?filter%5Barticles%5D=tit
 
 ```
 
-### Client permissions
-By default, all API end-points are accessible to all clients. Client authentication and read/write permissions are left as an exercice to the developer.
+## Modifying the default API behaviour
+By default, all API end-points are accessible to all clients.
 
 Provided [renderers](lib/jsonapi_for_rails/controller/utils/render.rb) can be used to implement `before_action` controller methods if needed.
+
+### Client authentication
+TODO
+
+### Client permissions
+TODO
+
+### Overriding an API end-point
+TODO
+
+## Implementation status
+* [Inclusion of related resources](http://jsonapi.org/format/1.0/#fetching-includes) is currently only implemented for resource requests that return a single resource. 
+* [Sparse fieldsets](http://jsonapi.org/format/1.0/#fetching-sparse-fieldsets) is currently only implemented for resource requests that return a single resource. 
+* [Sorting](http://jsonapi.org/format/1.0/#fetching-sorting) is currently unimplemented.
+* [Pagination](http://jsonapi.org/format/1.0/#fetching-pagination) is currently unimplemented.
+* [Deleting resources](http://jsonapi.org/format/1.0/#crud-deleting) is currently unimplemented.
+* Test coverage is sparse.
 
 ## Installation
 Add this line to your application's Gemfile:
