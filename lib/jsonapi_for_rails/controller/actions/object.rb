@@ -67,11 +67,20 @@ module JsonapiForRails::Controller
 				end
 
 				def show
-					@json = @jsonapi_record.to_jsonapi_hash
+					@json = @jsonapi_record.to_jsonapi_hash(
+						@jsonapi_sparse_fieldsets[model_type]
+					)
+					$stderr.puts "#{@json}" 
 
-					# include resources
+					# Sparse fieldsets
+					$stderr.puts "params #{params.inspect}" 
+					if @jsonapi_sparse_fieldsets[model_type]
+						$stderr.puts "Sparse fieldsets: #{@jsonapi_sparse_fieldsets[model_type]}" 
+					end
+
+					# Include resources
 					# TODO: relationship paths when including resources (http://jsonapi.org/format/1.0/#fetching-includes)
-					if @jsonapi_include.size>0 and @json[:data][:relationships]
+					if @jsonapi_include and @json[:data][:relationships]
 						@json[:include] = []
 						@jsonapi_include.each do |rel_name|
 							rel = @json[:data][:relationships][rel_name]

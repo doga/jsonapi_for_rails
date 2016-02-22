@@ -20,7 +20,7 @@ module JsonapiForRails::Controller
 
 				# used in returned JSON API data
 				def model_type
-					model_class_name.underscore.pluralize
+					model_class_name.underscore.pluralize.to_sym
 				end
 			end
 

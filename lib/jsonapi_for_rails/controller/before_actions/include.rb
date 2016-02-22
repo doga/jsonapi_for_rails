@@ -17,7 +17,7 @@ module JsonapiForRails::Controller
 
 			module InstanceMethods
 				def jsonapi_include
-					@jsonapi_include = []
+					#@jsonapi_include = nil
 					return unless params[:include] 
 
 					@jsonapi_include = params[:include].split(',').map{|rel| rel.strip.to_sym }

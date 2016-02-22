@@ -6,17 +6,25 @@ module JsonapiForRails::Model
 
 		# Define instance methods
 		class_exec do
-			def to_jsonapi_hash
+			def to_jsonapi_hash sparse_fieldset=nil
 				#$stderr.puts "JsonapiForRails::Controller::Actions::Object#show called" 
 
 				# attributes
 				attrs = attributes.reject do |key, value|
 					key =~ /^id$|_id$/
 				end
+				if sparse_fieldset
+					attrs.reject! do |key, value|
+						not sparse_fieldset.find{|f| key.to_sym == f}
+					end
+				end
 
 				# relationships
 				relationships = {}
 				self.class.reflect_on_all_associations.each do |association|
+					if sparse_fieldset
+						next unless sparse_fieldset.find{|f| association.name == f}
+					end
 					relationship = {}
 					relationships[association.name] = relationship
 

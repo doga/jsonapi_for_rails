@@ -23,7 +23,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     get article_path(articles(:uk_bank_and_bonuses)), {
       params: {
         include:              'author,tags',
-        'fields[articles]' => 'title',
+        'fields[articles]' => 'title,author,tags',
         'fields[authors]'  => 'name,email'
       },
       headers: {},
@@ -32,12 +32,13 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     json = JSON.parse response.body, symbolize_names: true
     $stderr.puts "#{json}" 
+    
     assert json
     assert json[:data]
     assert_kind_of String, json[:data][:type]
     assert_kind_of Fixnum, json[:data][:id]
     assert_kind_of Hash, json[:data][:attributes]
-    assert_kind_of Array, json[:data][:relationships]
+    assert_kind_of Hash, json[:data][:relationships]
   end
 
   test "get related author" do
@@ -66,7 +67,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     json = JSON.parse response.body, symbolize_names: true
-    $stderr.puts "#{json}" 
+    #$stderr.puts "#{json}" 
     
   end
 

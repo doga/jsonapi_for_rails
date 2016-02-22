@@ -14,6 +14,6 @@ class ArticleTest < ActiveSupport::TestCase
   end
 
   test "to_jsonapi_hash" do
-    $stderr.puts "#{articles(:uk_bank_and_bonuses).to_jsonapi_hash}" 
+    articles(:uk_bank_and_bonuses).to_jsonapi_hash
   end
 end
