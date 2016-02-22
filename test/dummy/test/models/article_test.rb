@@ -12,4 +12,8 @@ class ArticleTest < ActiveSupport::TestCase
     assert articles(:suede_boots).tags.include?(tags :fashion)
     refute articles(:suede_boots).tags.include?(tags :business)
   end
+
+  test "to_jsonapi_hash" do
+    $stderr.puts "#{articles(:uk_bank_and_bonuses).to_jsonapi_hash}" 
+  end
 end

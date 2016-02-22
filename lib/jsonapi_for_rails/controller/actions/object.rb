@@ -67,66 +67,7 @@ module JsonapiForRails::Controller
 				end
 
 				def show
-					#$stderr.puts "JsonapiForRails::Controller::Actions::Object#show called" 
-
-					# attributes
-					attributes = @record.attributes.reject do |key, value|
-						key =~ /^id$|_id$/
-					end
-
-					# relationships
-					relationships = {}
-					model_class.reflect_on_all_associations.each do |association|
-						relationship = {}
-						relationships[association.name] = relationship
-
-						# to-many relationship
-						if [
-							ActiveRecord::Reflection::HasManyReflection, 
-							ActiveRecord::Reflection::HasAndBelongsToManyReflection
-							].include? association.class
-
-							relationship[:data] = []
-							#$stderr.puts "\nreading relationship '#{association.name}' of class '#{association.class}'" 
-							#$stderr.puts "#{@record.send(association.name).inspect}" 
-							@record.send(association.name).each do |record|
-								#$stderr.puts "@record.#{association.name}: #{record.class}" 
-								relationship[:data] << {
-									type: record.class.to_s.pluralize.downcase, # TODO: factor out type generation from class
-									id:   record.id
-								}
-							end
-
-						# to-one relationship
-						elsif [
-							ActiveRecord::Reflection::HasOneReflection, 
-							ActiveRecord::Reflection::BelongsToReflection
-							].include? association.class
-
-							relationship[:data] = nil
-							#$stderr.puts "\nreading relationship '#{association.name}' of class '#{association.class}'" 
-							#$stderr.puts "#{@record.send(association.name).inspect}" 
-							if record = @record.send(association.name)
-								relationship[:data] = {
-									type: record.class.to_s.pluralize.downcase, # TODO: factor out type generation from class
-									id:   record.id
-								}
-							end
-						end
-					end
-
-					# message
-					@json = {
-						data: {
-							type:       model_class_name.pluralize.downcase,
-							id:         @record.id,
-
-							attributes: attributes,
-
-							relationships: relationships
-						}
-					}
-
+					@json = @record.to_jsonapi_hash
 					render_json @json
 				end
 
