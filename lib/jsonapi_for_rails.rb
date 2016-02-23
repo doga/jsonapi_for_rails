@@ -1,5 +1,5 @@
 
-# TODO: prefix @status and @json with 'jsonapi_'
+# TODO: send pull request to add jsonapi_for_rails to JSON API implementations list (http://jsonapi.org/implementations/)
 # TODO: double-check the installation instructions in README.md
 # TODO: 'Contributing' section in README.md
 

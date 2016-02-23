@@ -87,7 +87,7 @@ end
 ```
 
 ### 3. Verify your setup
-After populating your database and launching the built-in Rails server with the `bin/rails server` command, you can issue some HTTP requests to your API and verify the correctness of the responses.
+After populating your database and launching the built-in Rails server with the `bin/rails server` shell command, you can issue some HTTP requests to your API and verify the correctness of the responses.
 
 ```bash
 $ # Get the list of articles
@@ -197,24 +197,34 @@ end
 * Test coverage is sparse.
 
 ## Installation
-Add this line to your Rails application's Gemfile:
 
-```ruby
+### Edge version
+
+```bash
+$ # Clone this git repository
+$ git clone https://github.com/doga/jsonapi_for_rails.git
+$
+$ # Update your Rails application's gem file
+$ cat >> path/to/railsapp/Gemfile
+
+group :development do
+  gem 'jsonapi_for_rails', path: 'path/to/jsonapi_for_rails'
+end
+```
+
+This is suitable for experimenting, but not for production.
+
+### Latest stable version
+
+```bash
+$ # Update your Rails application's gem file
+$ cat >> path/to/railsapp/Gemfile
+
 gem 'jsonapi_for_rails'
 ```
 
-And then execute:
-```bash
-$ bundle
-```
-
-Or install it yourself as:
-```bash
-$ gem install jsonapi_for_rails
-```
-
 ## Contributing
-Contribution directions go here.
+If you find a bug in this project, have trouble following the documentation or have a question about the project – create an [issue](https://guides.github.com/activities/contributing-to-open-source/#contributing).
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
