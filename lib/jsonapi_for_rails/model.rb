@@ -72,7 +72,7 @@ module JsonapiForRails::Model
 					},
 =end
 					data: {
-						type:       model_type,
+						type:       jsonapi_model_type,
 						id:         self.id,
 
 						attributes: attrs,
@@ -83,11 +83,11 @@ module JsonapiForRails::Model
 
 			end
 
-			def model_type
-				"#{self.class}".underscore.pluralize
+			def jsonapi_model_type
+				"#{self.class}".underscore.pluralize.to_sym
 			end
 
-			private :model_type
+			private :jsonapi_model_type
 		end
 
 	end

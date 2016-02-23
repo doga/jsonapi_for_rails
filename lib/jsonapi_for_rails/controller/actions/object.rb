@@ -11,7 +11,7 @@ module JsonapiForRails::Controller
 				# TODO: pagination
 				def index
 					@json = {data: []}
-					model_class.all.each do |record|
+					jsonapi_model_class.all.each do |record|
 						@json[:data] << {
 							type: record.class.to_s.underscore.pluralize, # TODO: factor out type generation from class
 							id:   record.id
@@ -31,7 +31,7 @@ module JsonapiForRails::Controller
 								@jsonapi_record.update! attrs
 							else
 								# create
-								@jsonapi_record = model_class.create! attrs
+								@jsonapi_record = jsonapi_model_class.create! attrs
 							end
 						end
 
@@ -68,7 +68,7 @@ module JsonapiForRails::Controller
 
 				def show
 					@json = @jsonapi_record.to_jsonapi_hash(
-						@jsonapi_sparse_fieldsets[model_type]
+						@jsonapi_sparse_fieldsets[jsonapi_model_type]
 					)
 					#$stderr.puts "#{@json}" 
 
@@ -124,7 +124,7 @@ module JsonapiForRails::Controller
 						).require(
 							:attributes
 						).permit(
-							*model_class.attribute_names
+							*jsonapi_model_class.attribute_names
 						).reject do |key, value|
 							# ignore automatically generated attributes
 							%w(
@@ -144,7 +144,7 @@ module JsonapiForRails::Controller
 				end
 
 				def relationships
-					model_class.reflect_on_all_associations.collect do |association|
+					jsonapi_model_class.reflect_on_all_associations.collect do |association|
 						type = nil
 
 						type = :to_one if [
@@ -163,7 +163,7 @@ module JsonapiForRails::Controller
 							name: association.name,
 							type: type,
 							receiver: {
-								type: association.klass.to_s.underscore.pluralize,
+								type: association.klass.to_s.underscore.pluralize.to_sym,
 								class: association.klass.to_s.constantize
 							}
 						}

@@ -180,7 +180,7 @@ class ArticlesController < JsonapiResourcesController
   end
 
   def relationship_show
-    @jsonapi_relationship # => {:definition=>{:name=>:author, :type=>:to_one, :receiver=>{:type=>"authors", :class=>Author}}
+    @jsonapi_relationship # => {:definition=>{:name=>:author, :type=>:to_one, :receiver=>{:type=>:authors, :class=>Author}}
 
     # ...
   end

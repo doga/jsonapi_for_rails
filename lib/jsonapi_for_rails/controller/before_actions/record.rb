@@ -25,14 +25,14 @@ module JsonapiForRails::Controller
 					#$stderr.puts "JsonapiForRails::Controller::RecordFromRequest#jsonapi_require_record called" 
 					if params[:relationship] 
 						# relationship action
-						@jsonapi_record = model_class.find_by_id params["#{model_class_name.underscore}_id"].to_i
+						@jsonapi_record = jsonapi_model_class.find_by_id params["#{jsonapi_model_class_name.underscore}_id"].to_i
 					else
 						# CRUD action
-						@jsonapi_record = model_class
+						@jsonapi_record = jsonapi_model_class
 =begin
-						if false and @jsonapi_sparse_fieldsets[model_type] 
+						if false and @jsonapi_sparse_fieldsets[jsonapi_model_type] 
 							@jsonapi_record = @jsonapi_record.select(
-								@jsonapi_sparse_fieldsets[model_type]
+								@jsonapi_sparse_fieldsets[jsonapi_model_type]
 							) 
 						end
 =end

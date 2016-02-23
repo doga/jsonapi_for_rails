@@ -9,24 +9,24 @@ module JsonapiForRails::Controller
 			end
 
 			module InstanceMethods
-				def model_class_name
+				def jsonapi_model_class_name
 					controller_class_name = "#{self.class}"
 					controller_class_name.underscore.split('_')[0..-2].join('_').camelize.singularize
 				end
 
-				def model_class
-					model_class_name.constantize # Object.const_get model_class_name
+				def jsonapi_model_class
+					jsonapi_model_class_name.constantize # Object.const_get jsonapi_model_class_name
 				end
 
 				# used in returned JSON API data
-				def model_type
-					model_class_name.underscore.pluralize.to_sym
+				def jsonapi_model_type
+					jsonapi_model_class_name.underscore.pluralize.to_sym
 				end
 			end
 
 			def self.run_macros receiver
 				receiver.instance_exec do 
-					private :model_class_name, :model_class, :model_type
+					private :jsonapi_model_class_name, :jsonapi_model_class, :jsonapi_model_type
 				end
 			end
 
