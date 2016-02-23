@@ -108,13 +108,85 @@ $ curl 'http://localhost:3000/api/v1/articles/184578894?filter%5Barticles%5D=tit
 By default, all API end-points are accessible to all clients, and all end-points behave the same way for all clients. In a real-world setting, you may want to restrict access to an end-point and/or change the behaviour of an end-point depending on the client. 
 
 ### Client authentication
-Clients can be authenticated inside a `before_action` method in your API controller. Controller instance variable names starting with the `@jsonapi_` prefix are reserved by `jsonapi_for_rails`, so try to avoid those.
+Clients can be authenticated with a `before_action` method in your API controller. Inside controllers, instance variable names starting with the `@jsonapi_` prefix and method names starting with the `jsonapi_` prefix are reserved by `jsonapi_for_rails`, so try to avoid those.
+
+```ruby
+# app/controllers/jsonapi_resources_controller.rb
+class JsonapiResourcesController < ApplicationController
+  acts_as_jsonapi_resources
+
+  before_action :authenticate
+
+private
+  def authenticate
+    # ...
+  end
+end
+```
 
 ### Access control
-Access control for authenticated and unauthenticated users can be implemented inside a `before_action` method in your API controller.
+Access control for authenticated and unauthenticated users can be implemented inside a `before_action` method in your API controllers.
+
+```ruby
+# app/controllers/jsonapi_resources_controller.rb
+class JsonapiResourcesController < ApplicationController
+  acts_as_jsonapi_resources
+
+  before_action :permit_read, only: [
+    :index,
+    :show,
+    :relationship_show
+  ]
+
+  before_action :permit_write, only: [
+    :create, 
+    :update, 
+    :destroy,
+    :relationship_update,
+    :relationship_add,
+    :relationship_remove
+  ]
+
+private
+  def permit_read
+    # ...
+  end
+
+  def permit_write
+    # ...
+  end
+end
+```
 
 ### Overriding an API end-point
-The `bin/rails routes` command will show you the end-points that `jsonapi_for_rails` defines. In order to change the behaviour of an action, you can define an action with the same name inside an API controller. This does not mean that you will start from scratch, though. `jsonapi_for_rails` defines the `ActiveRecord::Base#to_jsonapi_hash` model instance method that returns a Hash that can serve as a starting point for implementing a `show` action.
+The `bin/rails routes` command will show you the end-points that `jsonapi_for_rails` defines. In order to change the behaviour of an action, you can define an action with the same name inside an API controller. `jsonapi_for_rails` provides utility methods and instance variables that can help you.
+
+```ruby
+# app/controllers/articles_controller.rb
+class ArticlesController < JsonapiResourcesController 
+
+  def index
+    jsonapi_model_class      # =>  Article
+    jsonapi_model_class_name # => "Article"
+    jsonapi_model_type       # => :articles
+
+    # ...
+  end
+
+  def show
+    @jsonapi_record.to_jsonapi_hash # => {data: {...}}
+
+    # ...
+  end
+
+  def relationship_show
+    @jsonapi_relationship # => {:definition=>{:name=>:author, :type=>:to_one, :receiver=>{:type=>"authors", :class=>Author}}
+
+    # ...
+  end
+
+end
+```
 
 ## Implementation status
 * [Inclusion of related resources](http://jsonapi.org/format/1.0/#fetching-includes) is currently only implemented for resource requests that return a single resource. 
@@ -125,7 +197,7 @@ The `bin/rails routes` command will show you the end-points that `jsonapi_for_ra
 * Test coverage is sparse.
 
 ## Installation
-Add this line to your application's Gemfile:
+Add this line to your Rails application's Gemfile:
 
 ```ruby
 gem 'jsonapi_for_rails'

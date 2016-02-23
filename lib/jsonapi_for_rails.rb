@@ -1,5 +1,7 @@
 
-# TODO: prefix @status and @json with jsonapi_
+# TODO: prefix @status and @json with 'jsonapi_'
+# TODO: double-check the installation instructions in README.md
+# TODO: 'Contributing' section in README.md
 
 require "jsonapi_for_rails/version"
 require "jsonapi_for_rails/controller"

@@ -25,7 +25,7 @@ module JsonapiForRails::Controller
 						fields = 
 							fields.split(',').
 							map{|field| field.strip.to_sym }.
-							select{|e| e =~ /^[A-Za-z1-9_]+$/}
+							select{|e| e =~ /^[A-Za-z1-9_]+$/} # BUG: selector too restrictive
 						next if fields.size.zero?
 						@jsonapi_sparse_fieldsets[resources_name] = fields#.join(',')
 					end 
