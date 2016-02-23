@@ -159,7 +159,7 @@ end
 ```
 
 ### Overriding an API end-point
-The `bin/rails routes` command will show you the end-points that *jsonapi_for_rails* defines. In order to change the behaviour of an action, you can define an action with the same name inside an API controller. *jsonapi_for_rails* provides utility methods and instance variables that can help you.
+The `bin/rails routes` shell command shows you the end-points that *jsonapi_for_rails* defines. In order to change the behaviour of an action, you can define an action with the same name inside an API controller. *jsonapi_for_rails* provides utility methods and instance variables that can help you.
 
 ```ruby
 # app/controllers/articles_controller.rb
@@ -205,20 +205,18 @@ $ # Clone this git repository
 $ git clone https://github.com/doga/jsonapi_for_rails.git
 $
 $ # Update your Rails application's gem file
-$ cat >> path/to/railsapp/Gemfile
+$ cat >> path/to/Gemfile
 
 group :development do
   gem 'jsonapi_for_rails', path: 'path/to/jsonapi_for_rails'
 end
 ```
 
-This is suitable for experimenting, but not for production.
-
 ### Latest stable version
 
 ```bash
 $ # Update your Rails application's gem file
-$ cat >> path/to/railsapp/Gemfile
+$ cat >> path/to/Gemfile
 
 gem 'jsonapi_for_rails'
 ```
