@@ -108,7 +108,7 @@ $ curl 'http://localhost:3000/api/v1/articles/184578894?filter%5Barticles%5D=tit
 By default, all API end-points are accessible to all clients, and all end-points behave the same way for all clients. In a real-world setting, you may want to restrict access to an end-point and/or change the behaviour of an end-point depending on the client. 
 
 ### Client authentication
-Clients can be authenticated with a `before_action` method in your API controller. Inside controllers, instance variable names starting with the `@jsonapi_` prefix and method names starting with the `jsonapi_` prefix are reserved by `jsonapi_for_rails`, so try to avoid those.
+Clients can be authenticated with a `before_action` method in your API controller. Inside controllers, instance variable names starting with the `@jsonapi_` prefix and method names starting with the `jsonapi_` prefix are reserved by *jsonapi_for_rails*, so try to avoid those.
 
 ```ruby
 # app/controllers/jsonapi_resources_controller.rb
@@ -159,7 +159,7 @@ end
 ```
 
 ### Overriding an API end-point
-The `bin/rails routes` command will show you the end-points that `jsonapi_for_rails` defines. In order to change the behaviour of an action, you can define an action with the same name inside an API controller. `jsonapi_for_rails` provides utility methods and instance variables that can help you.
+The `bin/rails routes` command will show you the end-points that *jsonapi_for_rails* defines. In order to change the behaviour of an action, you can define an action with the same name inside an API controller. *jsonapi_for_rails* provides utility methods and instance variables that can help you.
 
 ```ruby
 # app/controllers/articles_controller.rb
