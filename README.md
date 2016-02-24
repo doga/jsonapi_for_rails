@@ -9,7 +9,7 @@ A [Rails](http://rubyonrails.org/) 5+ plugin for providing a [JSONAPI v1.0](http
 $ # Go to the root directory of your existing Rails application
 $ cd path/to/railsapp
 $
-$ # Update your Rails application's gem file
+$ # Update the gem file
 $ cat >> Gemfile
 gem 'jsonapi_for_rails'
 $

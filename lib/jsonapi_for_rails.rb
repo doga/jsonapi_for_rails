@@ -1,7 +1,6 @@
 
-# TODO: send pull request to add jsonapi_for_rails to JSON API implementations list (http://jsonapi.org/implementations/)
 # TODO: double-check the installation instructions in README.md
-# TODO: 'Contributing' section in README.md
+# TODO: better describe @jsonapi_relationship in README.md (what can it contain besides 'definition'?)
 
 require "jsonapi_for_rails/version"
 require "jsonapi_for_rails/controller"
