@@ -15,7 +15,6 @@ gem 'jsonapi_for_rails'
 ### Edge version
 
 ```bash
-$ # Update your Rails application's gem file
 $ cat >> path/to/Gemfile
 
 group :development do
