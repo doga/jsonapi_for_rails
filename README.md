@@ -21,13 +21,10 @@ $ bundle install
 
 ```bash
 $ cd path/to/railsapp
-$
 $ cat >> Gemfile
 group :development do
   gem 'jsonapi_for_rails', git: 'https://github.com/doga/jsonapi_for_rails.git'
 end
-$
-$ # Install
 $ bundle install
 ```
 
