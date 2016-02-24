@@ -67,7 +67,7 @@ Rails.application.routes.draw do
   scope '/api/v1' do # Optional scoping
 
     [ # List your API controllers here
-      :authors, :articles
+      :articles, :authors
     ].each do |resources_name|
       resources resources_name do
         controller resources_name do
