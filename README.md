@@ -98,7 +98,7 @@ $ # Get an article
 $ curl 'http://localhost:3000/api/v1/articles/184578894'
 {"data":{"type":"articles","id":618037523,"attributes":{"title":"UK bank pay and bonuses in the spotlight as results season starts","content":"The pay deals handed to the bosses of Britain’s biggest banks will be in focus ...","created_at":"2016-02-22T16:57:43.401Z","updated_at":"2016-02-22T16:57:43.401Z"},"relationships":{"author":{"data":{"type":"authors","id":1023487079}}}}}
 $
-$ # Get only the title of an article, include the author name
+$ # Get only the title and author of an article, include the author's name
 $ curl 'http://localhost:3000/api/v1/articles/184578894?filter%5Barticles%5D=title,author;include=author;filter%5Bauthors%5D=name'
 {"data":{"type":"articles","id":618037523,"attributes":{"title":"UK bank pay and bonuses in the spotlight as results season starts"},"relationships":{"author":{"data":{"type":"authors","id":1023487079}}}},"include":[{"data":{"type":"authors","id":1023487079,"attributes":{"name":"..."},"relationships":{}}}]}
 
