@@ -1,6 +1,28 @@
 # JsonapiForRails
 A [Rails](http://rubyonrails.org/) 5+ plugin for providing a [JSONAPI v1.0](http://jsonapi.org/format/1.0/) API from your application with very little coding.
 
+## Installation
+
+### Official version
+
+```bash
+$ # Update your Rails application's gem file
+$ cat >> path/to/Gemfile
+
+gem 'jsonapi_for_rails'
+```
+
+### Edge version
+
+```bash
+$ # Update your Rails application's gem file
+$ cat >> path/to/Gemfile
+
+group :development do
+  gem 'jsonapi_for_rails', git: 'https://github.com/doga/jsonapi_for_rails.git'
+end
+```
+
 ## Usage
 
 ### 1. Set up one API controller per model
@@ -194,28 +216,6 @@ end
 * [Pagination](http://jsonapi.org/format/1.0/#fetching-pagination) is currently not implemented.
 * [Deleting resources](http://jsonapi.org/format/1.0/#crud-deleting) is currently not implemented.
 * Test coverage is sparse.
-
-## Installation
-
-### Official version
-
-```bash
-$ # Update your Rails application's gem file
-$ cat >> path/to/Gemfile
-
-gem 'jsonapi_for_rails'
-```
-
-### Edge version
-
-```bash
-$ # Update your Rails application's gem file
-$ cat >> path/to/Gemfile
-
-group :development do
-  gem 'jsonapi_for_rails', git: 'https://github.com/doga/jsonapi_for_rails.git'
-end
-```
 
 ## Contributing
 If you find a bug in this project, have trouble following the documentation or have a question about the project – create an [issue](https://github.com/doga/jsonapi_for_rails/issues).
