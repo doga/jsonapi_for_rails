@@ -167,7 +167,6 @@ class ArticlesController < JsonapiResourcesController
 
   def index
     jsonapi_model_class      # =>  Article
-    jsonapi_model_class_name # => "Article"
     jsonapi_model_type       # => :articles
 
     # ...
