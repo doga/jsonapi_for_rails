@@ -46,14 +46,14 @@ end
 ```
 
 ```ruby
-# app/controllers/authors_controller.rb
+# app/controllers/articles_controller.rb
 
 # Change the API controller's parent class
-class AuthorsController < JsonapiResourcesController
+class ArticlesController < JsonapiResourcesController
   # ...
 end
 
-# Do the same with ArticlesController
+# Do the same with AuthorsController
 ```
 
 ### 2. Configure your API controller routes
