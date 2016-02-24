@@ -6,20 +6,28 @@ A [Rails](http://rubyonrails.org/) 5+ plugin for providing a [JSONAPI v1.0](http
 ### Official version
 
 ```bash
+$ # Go to the root directory of your existing Rails application
+$ cd path/to/railsapp
+$
 $ # Update your Rails application's gem file
-$ cat >> path/to/Gemfile
-
+$ cat >> Gemfile
 gem 'jsonapi_for_rails'
+$
+$ # Install
+$ bundle install
 ```
 
 ### Edge version
 
 ```bash
-$ cat >> path/to/Gemfile
-
+$ cd path/to/railsapp
+$
+$ cat >> Gemfile
 group :development do
   gem 'jsonapi_for_rails', git: 'https://github.com/doga/jsonapi_for_rails.git'
 end
+$ # Install
+$ bundle install
 ```
 
 ## Usage
@@ -29,7 +37,6 @@ end
 Generate a controller for each model that will be accessible from your API. Controller names need to be the plural version of your model names.
 
 ```bash
-$ # Go to the root directory of your existing Rails application
 $ cd path/to/railsapp
 $
 $ # Generate your models
