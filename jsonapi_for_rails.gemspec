@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = JsonapiForRails::VERSION
   s.authors     = ["Doga Armangil"]
   s.email       = ["doga.armangil@alumni.epfl.ch"]
-  s.homepage    = "http://jsonapi.org/format/"
-  s.summary     = "JSONAPI plugin for Rails"
-  s.description = "Use this for providing a JSONAPI API with your controllers and models."
+  s.homepage    = "https://github.com/doga/jsonapi_for_rails"
+  s.summary     = "Jsonapi for Rails empowers your JSON API compliant APIs"
+  s.description = "Jsonapi for Rails empowers your JSON API compliant APIs. Requires with very little coding. http://jsonapi.org/format/"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]

@@ -125,7 +125,7 @@ end
 ```
 
 ### Access control
-Access control for authenticated and unauthenticated users can be implemented inside a `before_action` method in your API controllers.
+Access control for authenticated and unauthenticated clients can be implemented in `before_action` methods in your API controllers.
 
 ```ruby
 # app/controllers/jsonapi_resources_controller.rb
@@ -189,30 +189,16 @@ end
 ```
 
 ## Implementation status
-* [Inclusion of related resources](http://jsonapi.org/format/1.0/#fetching-includes) is currently only implemented for resource requests that return a single resource. 
-* [Sparse fieldsets](http://jsonapi.org/format/1.0/#fetching-sparse-fieldsets) is currently only implemented for resource requests that return a single resource. 
-* [Sorting](http://jsonapi.org/format/1.0/#fetching-sorting) is currently unimplemented.
-* [Pagination](http://jsonapi.org/format/1.0/#fetching-pagination) is currently unimplemented.
-* [Deleting resources](http://jsonapi.org/format/1.0/#crud-deleting) is currently unimplemented.
+* [Inclusion of related resources](http://jsonapi.org/format/1.0/#fetching-includes) is currently only implemented for requests that return a single resource, and relationship paths are not supported. 
+* [Sparse fieldsets](http://jsonapi.org/format/1.0/#fetching-sparse-fieldsets) is currently only implemented for requests that return a single resource. 
+* [Sorting](http://jsonapi.org/format/1.0/#fetching-sorting) is currently not implemented.
+* [Pagination](http://jsonapi.org/format/1.0/#fetching-pagination) is currently not implemented.
+* [Deleting resources](http://jsonapi.org/format/1.0/#crud-deleting) is currently not implemented.
 * Test coverage is sparse.
 
 ## Installation
 
-### Edge version
-
-```bash
-$ # Clone this git repository
-$ git clone https://github.com/doga/jsonapi_for_rails.git
-$
-$ # Update your Rails application's gem file
-$ cat >> path/to/Gemfile
-
-group :development do
-  gem 'jsonapi_for_rails', path: 'path/to/jsonapi_for_rails'
-end
-```
-
-### Latest stable version
+### Official version
 
 ```bash
 $ # Update your Rails application's gem file
@@ -221,8 +207,19 @@ $ cat >> path/to/Gemfile
 gem 'jsonapi_for_rails'
 ```
 
+### Edge version
+
+```bash
+$ # Update your Rails application's gem file
+$ cat >> path/to/Gemfile
+
+group :development do
+  gem 'jsonapi_for_rails', git: 'https://github.com/doga/jsonapi_for_rails.git'
+end
+```
+
 ## Contributing
-If you find a bug in this project, have trouble following the documentation or have a question about the project – create an [issue](https://guides.github.com/activities/contributing-to-open-source/#contributing).
+If you find a bug in this project, have trouble following the documentation or have a question about the project – create an [issue](https://github.com/doga/jsonapi_for_rails/issues).
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
