@@ -12,12 +12,12 @@ $ # Go to the root directory of your existing Rails application
 $ cd path/to/railsapp
 $
 $ # Generate your models
-$ bin/rails generate model author
 $ bin/rails generate model article
+$ bin/rails generate model author
 $
 $ # Generate your API controllers
-$ bin/rails generate controller authors
 $ bin/rails generate controller articles
+$ bin/rails generate controller authors
 ```
 
 Then enable JSONAPI in a parent class of your API controllers. 
