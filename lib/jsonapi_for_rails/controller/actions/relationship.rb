@@ -17,13 +17,13 @@ module JsonapiForRails::Controller
 					if @jsonapi_relationship[:definition][:type] == :to_one
 						@json = {
 							type: @jsonapi_relationship[:definition][:receiver][:type],
-							id:   rel.id
+							id:   rel.id.to_s
 						}
 					elsif @jsonapi_relationship[:definition][:type] == :to_many
 						@json = rel.collect do |r|
 							{
 								type: @jsonapi_relationship[:definition][:receiver][:type],
-								id:   r.id
+								id:   r.id.to_s
 							}
 						end
 					end

@@ -21,8 +21,6 @@ module JsonapiForRails::Controller
 
 			module InstanceMethods
 				def jsonapi_require_record
-					#$stderr.puts "@jsonapi_sparse_fieldsets: #{@jsonapi_sparse_fieldsets.inspect}" 
-					#$stderr.puts "JsonapiForRails::Controller::RecordFromRequest#jsonapi_require_record called" 
 					if params[:relationship] 
 						# relationship action
 						@jsonapi_record = jsonapi_model_class.find_by_id params["#{jsonapi_model_class_name.underscore}_id"].to_i
@@ -40,7 +38,6 @@ module JsonapiForRails::Controller
 					end
 					#$stderr.puts "@jsonapi_record: #{@jsonapi_record.inspect}" 
 					return if @jsonapi_record
-
 					render_error 401, "Bad request."
 				end
 

@@ -47,21 +47,28 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert relationship
     assert relationship[:definition]
     assert relationship[:params]
-    $stderr.puts "#{relationship[:params][:data].class}" 
     #$stderr.puts "relationship[:params][:data]: #{relationship[:params][:data].inspect}" 
     #$stderr.puts "relationship[:params][:data][:type]: #{relationship[:params][:data][:type].inspect}" 
     #$stderr.puts "@jsonapi_relationship: #{relationship.inspect}" 
   end
 
-=begin
 
   test "get list of articles" do
     assert_no_difference 'Article.count' do
       get articles_path
     end
+    #$stderr.puts "#{@response.inspect}" 
+    $stderr.puts "response.body: #{response.body}" 
+
+    $stderr.puts "@@@@@@@@@@@@@@@@@@@@@" 
+    $stderr.puts "controller.params: #{@controller.params.inspect}" 
+    $stderr.puts "action: #{@controller.instance_variable_get('@action')}" 
+    @controller.instance_variable_get('@jsonapi_debug').each do |item|
+      $stderr.puts "@@@@@@@@@@@@@@@@@@@@@@@ #{item.inspect}" 
+    end
 
     assert_response :success
-    #$stderr.puts "#{response.body}" 
+    $stderr.puts "llllllllllllllllllllllllllllllll" 
     json = JSON.parse response.body, symbolize_names: true
     #$stderr.puts "#{json}" 
 
@@ -76,6 +83,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "get article"  do
+    skip
     get article_path(articles(:uk_bank_and_bonuses)), {
       params: {
         'fields[articles]' => 'title,author',
@@ -86,13 +94,14 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       xhr: true
     }
     assert_response :success
+    $stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
     #$stderr.puts "#{json}" 
     
     assert json
     assert json[:data]
     assert_kind_of String, json[:data][:type]
-    assert_kind_of Fixnum, json[:data][:id]
+    assert_kind_of String, json[:data][:id]
     assert_kind_of Hash, json[:data][:attributes]
     assert_kind_of Hash, json[:data][:relationships]
   end
@@ -101,6 +110,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     get "#{article_path articles(:uk_bank_and_bonuses)}/relationships/author"
 
     assert_response :success
+    #$stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
     #$stderr.puts "#{json}" 
     assert_equal 'authors', json[:data][:type], "bad type"
@@ -110,6 +120,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "set related author" do
+    skip
     patch(
       "#{article_path articles(:suede_boots)}/relationships/author",
       xhr: true,
@@ -122,6 +133,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     )
 
     assert_response :success
+    $stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
     #$stderr.puts "#{json}" 
     
@@ -144,6 +156,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "add related tag" do
+    skip
     patch(
       "#{article_path articles(:suede_boots)}/relationships/tags",
       xhr: true,
@@ -163,5 +176,5 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     
   end
 
-=end
+
 end

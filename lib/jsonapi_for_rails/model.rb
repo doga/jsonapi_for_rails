@@ -41,7 +41,7 @@ module JsonapiForRails::Model
 							#$stderr.puts "self.#{association.name}: #{record.class}" 
 							relationship[:data] << {
 								type: record.class.to_s.underscore.pluralize, # TODO: factor out type generation from class
-								id:   record.id
+								id:   record.id.to_s
 							}
 						end
 
@@ -58,7 +58,7 @@ module JsonapiForRails::Model
 						if record = self.send(association.name)
 							relationship[:data] = {
 								type: record.class.to_s.underscore.pluralize, # TODO: factor out type generation from class
-								id:   record.id
+								id:   record.id.to_s
 							}
 						end
 					end
@@ -73,7 +73,7 @@ module JsonapiForRails::Model
 =end
 					data: {
 						type:       jsonapi_model_type,
-						id:         self.id,
+						id:         self.id.to_s,
 
 						attributes: attrs,
 

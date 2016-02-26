@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :test
+  #before_action :test
 
   def index
     render json: {data:[]}, content_type: 'application/vnd.api+json'
