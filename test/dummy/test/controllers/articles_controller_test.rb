@@ -1,13 +1,64 @@
 require 'test_helper'
 
 class ArticlesControllerTest < ActionDispatch::IntegrationTest
+  test "'@jsonapi_record' is set and '@jsonapi_relationship' is not set when inside 'show' action" do
+    get "#{article_path articles(:uk_bank_and_bonuses)}"
+    record = @controller.instance_variable_get('@jsonapi_record')
+    relationship = @controller.instance_variable_get('@jsonapi_relationship')
+
+    assert record
+    assert record.class == @controller.send(:jsonapi_model_class)
+    assert record.id == articles(:uk_bank_and_bonuses).id
+
+    refute relationship
+  end
+
+  test "'@jsonapi_record' and '@jsonapi_relationship' are set when inside 'relationship_show' action" do
+    get "#{article_path articles(:uk_bank_and_bonuses)}/relationships/author"
+    record = @controller.instance_variable_get('@jsonapi_record')
+    relationship = @controller.instance_variable_get('@jsonapi_relationship')
+
+    assert record
+    assert record.id == articles(:uk_bank_and_bonuses).id
+
+    assert relationship
+    assert relationship[:definition]
+    refute relationship[:params]
+    #$stderr.puts "@jsonapi_relationship: #{relationship.inspect}" 
+  end
+
+  test "'@jsonapi_record' and '@jsonapi_relationship' are set when inside 'relationship_update' action" do
+    patch(
+      "#{article_path articles(:uk_bank_and_bonuses)}/relationships/author",
+      xhr: true,
+      params: {
+        data: {
+          type: authors(:press_association).class.to_s.underscore.pluralize,
+          id:   authors(:press_association).id
+        }
+      }
+    )
+    record = @controller.instance_variable_get('@jsonapi_record')
+    relationship = @controller.instance_variable_get('@jsonapi_relationship')
+
+    assert record
+    assert record.id == articles(:uk_bank_and_bonuses).id
+
+    assert relationship
+    assert relationship[:definition]
+    assert relationship[:params]
+    #$stderr.puts "@jsonapi_relationship: #{relationship.inspect}" 
+  end
+
+=begin
+
   test "get list of articles" do
     assert_no_difference 'Article.count' do
       get articles_path
     end
 
     assert_response :success
-    $stderr.puts "#{response.body}" 
+    #$stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
     #$stderr.puts "#{json}" 
 
@@ -108,4 +159,6 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     #$stderr.puts "#{json}" 
     
   end
+
+=end
 end

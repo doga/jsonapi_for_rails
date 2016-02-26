@@ -205,7 +205,19 @@ class ArticlesController < JsonapiResourcesController
   end
 
   def relationship_show
-    @jsonapi_relationship # => {:definition=>{:name=>:author, :type=>:to_one, :receiver=>{:type=>:authors, :class=>Author}}
+    # @jsonapi_relationship is available in all relationship actions.
+    # @jsonapi_relationship[:definition] describes the current relationship.
+    @jsonapi_relationship # => {:definition=>{:name=>:author, :type=>:to_one, :receiver=>{:type=>:authors, :class=>Author}}}
+
+    # ...
+  end
+
+  def relationship_update
+    # @jsonapi_relationship[:params] contains the parsed request body.
+    # It is available for all relationship actions except relationship_show.
+    # @jsonapi_relationship[:params][:data] is a Hash for relationships 
+    # of type :to_one, and an Array for relationships of type :to_many.
+    @jsonapi_relationship # => {:definition=>{...}, , :params=>{"data"=>{"type"=>"authors", "id"=>"234455384"}}}
 
     # ...
   end

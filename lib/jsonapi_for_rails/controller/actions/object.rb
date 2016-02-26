@@ -170,6 +170,7 @@ module JsonapiForRails::Controller
 					end.compact
 				end
 
+				# TODO: define a separate method for relationship actions (i.e. when params[:relationship] != nil)
 				def received_relationships
 					rels = relationships
 					if params[:relationship] # only one relationship received for relationship action
@@ -230,7 +231,7 @@ module JsonapiForRails::Controller
 									conformant = false
 									break
 								end
-								conformant = false unless received_params[:data][:type] == relationship[:receiver][:type]
+								conformant = false unless received_params[:data][:type].to_sym == relationship[:receiver][:type]
 
 								break
 							end
