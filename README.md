@@ -215,8 +215,8 @@ class ArticlesController < JsonapiResourcesController
   def relationship_update
     # @jsonapi_relationship[:params] contains the parsed request body.
     # It is available for all relationship actions except relationship_show.
-    # @jsonapi_relationship[:params][:data] is a Hash for relationships 
-    # of type :to_one, and an Array for relationships of type :to_many.
+    # @jsonapi_relationship[:params][:data] behaves like a Hash for relationships of type :to_one,
+    # and as an Array for relationships of type :to_many.
     @jsonapi_relationship # => {:definition=>{...}, :params=>{"data"=>{"type"=>"authors", "id"=>"234455384"}}}
 
     # ...

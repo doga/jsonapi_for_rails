@@ -47,6 +47,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert relationship
     assert relationship[:definition]
     assert relationship[:params]
+    $stderr.puts "#{relationship[:params][:data].class}" 
+    #$stderr.puts "relationship[:params][:data]: #{relationship[:params][:data].inspect}" 
+    #$stderr.puts "relationship[:params][:data][:type]: #{relationship[:params][:data][:type].inspect}" 
     #$stderr.puts "@jsonapi_relationship: #{relationship.inspect}" 
   end
 
