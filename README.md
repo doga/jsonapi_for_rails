@@ -118,7 +118,7 @@ After populating your database and launching the built-in Rails server with the 
 ```bash
 $ # Get the list of articles
 $ curl 'http://localhost:3000/api/v1/articles'
-{"data":[{"type":"articles","id":"184578894"},{"type":"articles","id":"388548390"},{"type":"articles","id":"618037523"},{"type":"articles","id":"994552601"}]}
+{"data":[{"type":"articles","id":"618037523"},{"type":"articles","id":"184578894"},{"type":"articles","id":"388548390"},{"type":"articles","id":"994552601"}]}
 $
 $ # Get an article
 $ curl 'http://localhost:3000/api/v1/articles/618037523'
