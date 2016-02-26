@@ -54,13 +54,13 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
 
   test "get list of articles" do
+    # BUG: ArticlesController#index is not called
     assert_no_difference 'Article.count' do
-      get articles_path
+      get articles_path 
     end
     #$stderr.puts "#{@response.inspect}" 
     $stderr.puts "response.body: #{response.body}" 
 
-    $stderr.puts "@@@@@@@@@@@@@@@@@@@@@" 
     $stderr.puts "controller.params: #{@controller.params.inspect}" 
     $stderr.puts "action: #{@controller.instance_variable_get('@action')}" 
     @controller.instance_variable_get('@jsonapi_debug').each do |item|
@@ -83,7 +83,6 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "get article"  do
-    skip
     get article_path(articles(:uk_bank_and_bonuses)), {
       params: {
         'fields[articles]' => 'title,author',
@@ -94,7 +93,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       xhr: true
     }
     assert_response :success
-    $stderr.puts "#{response.body}" 
+    #$stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
     #$stderr.puts "#{json}" 
     
