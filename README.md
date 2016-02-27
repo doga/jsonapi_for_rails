@@ -194,6 +194,7 @@ The `bin/rails routes` shell command shows you the end-points that *jsonapi_for_
 class ArticlesController < JsonapiResourcesController 
 
   def index
+    # These model-related utility methods are available inside all action methods.
     jsonapi_model_class      # =>  Article
     jsonapi_model_type       # => :articles
 
@@ -201,13 +202,16 @@ class ArticlesController < JsonapiResourcesController
   end
 
   def show
+    # @jsonapi_record contains the current database record.
+    # It is available inside all action methods (including all relationship
+    # methods) except :index and :create.
     @jsonapi_record.to_jsonapi_hash # => {data: {...}}
 
     # ...
   end
 
   def relationship_show
-    # @jsonapi_relationship is available in all relationship actions.
+    # @jsonapi_relationship is available in all relationship action methods.
     # @jsonapi_relationship[:definition] describes the current relationship.
     @jsonapi_relationship # => {:definition=>{:name=>:author, :type=>:to_one, :receiver=>{:type=>:authors, :class=>Author}}}
 
@@ -216,9 +220,9 @@ class ArticlesController < JsonapiResourcesController
 
   def relationship_update
     # @jsonapi_relationship[:params] contains the parsed request body.
-    # It is available for all relationship actions except relationship_show.
-    # @jsonapi_relationship[:params][:data] behaves like a Hash for relationships of type :to_one,
-    # and as an Array for relationships of type :to_many.
+    # It is available for all relationship action methods except relationship_show.
+    # @jsonapi_relationship[:params][:data] behaves like a Hash for relationships
+    # of type :to_one, and as an Array for relationships of type :to_many.
     @jsonapi_relationship # => {:definition=>{...}, :params=>{"data"=>{"type"=>"authors", "id"=>"234455384"}}}
 
     # ...
