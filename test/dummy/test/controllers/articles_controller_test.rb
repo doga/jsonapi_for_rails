@@ -112,22 +112,31 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "set related author" do
-    skip
+    # author isn't press_association
+    get "#{article_path articles(:suede_boots)}/relationships/author"
+    assert_response :success
+    assert_nil(response.body.index authors(:press_association).id.to_s)
+
+    # set author
+    # Rails BUG: headers can't be set
+    request.headers['Accept'] = 'application/vnd.api+json'
+    request.headers['Content-Type'] = 'application/vnd.api+json'
     patch(
       "#{article_path articles(:suede_boots)}/relationships/author",
       xhr: true,
       params: {
         data: {
-          type: authors(:press_association)[:type],
-          id:   authors(:press_association)[:id]
+          type: :authors,
+          id:   authors(:press_association).id.to_s
         }
       }
     )
-
     assert_response :success
-    $stderr.puts "#{response.body}" 
-    json = JSON.parse response.body, symbolize_names: true
-    #$stderr.puts "#{json}" 
+
+    # author is press_association
+    get "#{article_path articles(:suede_boots)}/relationships/author"
+    assert_response :success
+    assert(response.body.index authors(:press_association).id.to_s)
     
   end
 
@@ -135,6 +144,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     get "#{article_path articles(:uk_bank_and_bonuses)}/relationships/tags"
 
     assert_response :success
+    #$stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
     #$stderr.puts "#{json}" 
 
@@ -148,19 +158,21 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "add related tag" do
-    skip
+    #skip
     patch(
       "#{article_path articles(:suede_boots)}/relationships/tags",
       xhr: true,
       params: {
         data: [
           {
-            type: tags(:business)[:type],
-            id: tags(:business)[:id]
+            type: :tags,
+            id: tags(:business).id.to_s
           }
         ]
       }
     )
+
+    $stderr.puts "#{response.body}" 
 
     assert_response :success
     json = JSON.parse response.body, symbolize_names: true

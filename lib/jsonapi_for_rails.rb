@@ -1,4 +1,3 @@
-# BUG: convert ids to strings in received data 
 # TODO: JSONAPI: adding optional members to documents ('jsonapi', 'meta')
 # TODO: JSONAPI: return conformant HTTP status codes
 # TODO: JSONAPI: conformant and rich 'errors' member
@@ -9,8 +8,8 @@
 # TODO: JSONAPI: Location header
 
 # TODO: README.md: double-check the installation instructions
-# TODO: README.md: describe @jsonapi_include?
-# TODO: README.md: describe @jsonapi_sparse_fieldsets?
+# TODO: README.md: describe @jsonapi_include ?
+# TODO: README.md: describe @jsonapi_sparse_fieldsets ?
 
 
 require "jsonapi_for_rails/version"
