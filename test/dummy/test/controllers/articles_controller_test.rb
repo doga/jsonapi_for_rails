@@ -61,14 +61,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     #$stderr.puts "#{@response.inspect}" 
     $stderr.puts "response.body: #{response.body}" 
 
-    $stderr.puts "controller.params: #{@controller.params.inspect}" 
-    $stderr.puts "action: #{@controller.instance_variable_get('@action')}" 
-    @controller.instance_variable_get('@jsonapi_debug').each do |item|
-      $stderr.puts "@@@@@@@@@@@@@@@@@@@@@@@ #{item.inspect}" 
-    end
-
     assert_response :success
-    $stderr.puts "llllllllllllllllllllllllllllllll" 
     json = JSON.parse response.body, symbolize_names: true
     #$stderr.puts "#{json}" 
 

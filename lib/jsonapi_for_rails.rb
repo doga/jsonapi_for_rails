@@ -1,5 +1,4 @@
-
-# TODO: JSONAPI: id of resource object is a string
+# BUG: convert ids to strings in received data 
 # TODO: JSONAPI: adding optional members to documents ('jsonapi', 'meta')
 # TODO: JSONAPI: return conformant HTTP status codes
 # TODO: JSONAPI: conformant and rich 'errors' member
@@ -10,7 +9,6 @@
 # TODO: JSONAPI: Location header
 
 # TODO: README.md: double-check the installation instructions
-# TODO: README.md: better describe @jsonapi_relationship (what can it contain besides 'definition'?)
 # TODO: README.md: describe @jsonapi_include?
 # TODO: README.md: describe @jsonapi_sparse_fieldsets?
 

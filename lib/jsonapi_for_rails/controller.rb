@@ -1,5 +1,6 @@
 require "jsonapi_for_rails/controller/utils/model"
 require "jsonapi_for_rails/controller/utils/render"
+require "jsonapi_for_rails/controller/before_actions/content_negotiation"
 require "jsonapi_for_rails/controller/before_actions/sparse_fieldsets"
 require "jsonapi_for_rails/controller/before_actions/include"
 require "jsonapi_for_rails/controller/before_actions/record"
@@ -21,6 +22,7 @@ module JsonapiForRails::Controller
 
 			include JsonapiForRails::Controller::Utils::Model
 			include JsonapiForRails::Controller::Utils::Render
+			include JsonapiForRails::Controller::BeforeActions::ContentNegotiation
 			include JsonapiForRails::Controller::BeforeActions::SparseFieldsets
 			include JsonapiForRails::Controller::BeforeActions::Include
 			include JsonapiForRails::Controller::BeforeActions::Record

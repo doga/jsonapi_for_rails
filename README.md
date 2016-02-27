@@ -1,5 +1,5 @@
 # JsonapiForRails
-A [Rails](http://rubyonrails.org/) 5+ plugin for providing a [JSONAPI v1.0](http://jsonapi.org/format/1.0/) API from your application with very little coding.
+A [Rails](http://rubyonrails.org/) 4+ plugin for providing a [JSONAPI v1.0](http://jsonapi.org/format/1.0/) API from your application with very little coding.
 
 ## Installation
 
@@ -225,15 +225,18 @@ end
 ```
 
 ## Implementation status
+This software is not production-ready yet, but the intention is to release a 1.0 version around mid-2016. The internal architecture is sound. What remains is adding missing features and weeding out bugs. Test coverage is currently being bulked up using *Rails 5 beta 2* but the plugin should be compatible with *Rails 4+*.
+
+Feature support roundup:
+
 * [Inclusion of related resources](http://jsonapi.org/format/1.0/#fetching-includes) is currently only implemented for requests that return a single resource, and relationship paths are not supported. 
 * [Sparse fieldsets](http://jsonapi.org/format/1.0/#fetching-sparse-fieldsets) is currently only implemented for requests that return a single resource. 
 * [Sorting](http://jsonapi.org/format/1.0/#fetching-sorting) is currently not implemented.
 * [Pagination](http://jsonapi.org/format/1.0/#fetching-pagination) is currently not implemented.
 * [Deleting resources](http://jsonapi.org/format/1.0/#crud-deleting) is currently not implemented.
-* Test coverage is sparse.
 
 ## Contributing
-If you find a bug in this project, have trouble following the documentation or have a question about the project – create an [issue](https://github.com/doga/jsonapi_for_rails/issues).
+Feel free to share your experience using this software. If you find a bug in this project, have trouble following the documentation or have a question about the project – create an [issue](https://github.com/doga/jsonapi_for_rails/issues).
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

@@ -11,7 +11,6 @@ module JsonapiForRails::Controller
 				# TODO: pagination
 				def index
 					@json = {data: []}
-					@jsonapi_debug=[jsonapi_model_class,jsonapi_model_class.all]
 					jsonapi_model_class.all.each do |record|
 						@json[:data] << {
 							type: record.class.to_s.underscore.pluralize, # TODO: factor out type generation from class
