@@ -1,6 +1,8 @@
 # JsonapiForRails
 A [Rails](http://rubyonrails.org/) 4+ plugin for providing a [JSONAPI v1.0](http://jsonapi.org/format/1.0/) API from your application with very little coding.
 
+* [Installation](#installation)
+
 ## Installation
 *jsonapi_for_rails* is not production-ready yet, and the suggested installation steps reflect that fact.
 
