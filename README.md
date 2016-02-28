@@ -33,6 +33,13 @@ end
 $
 $ # Install
 $ bundle install
+$
+$ # Check installed version
+$ bin/rails console
+irb(main):001:0> JsonapiForRails::VERSION
+=> "0.1.4"
+irb(main):002:0> exit
+$
 ```
 
 ### Edge version
