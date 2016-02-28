@@ -34,7 +34,7 @@ $
 $ # Install
 $ bundle install
 $
-$ # Check installed version
+$ # Check the version
 $ bin/rails console
 irb(main):001:0> JsonapiForRails::VERSION
 => "0.1.4"
