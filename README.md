@@ -2,6 +2,19 @@
 A [Rails](http://rubyonrails.org/) 4+ plugin for providing a [JSONAPI v1.0](http://jsonapi.org/format/1.0/) API from your application with very little coding.
 
 * [Installation](#installation)
+  * [Official version](#official-version)
+  * [Edge version](#edge-version)
+* [Usage](#usage)
+  * [1. Set up one API controller per model](#1-set-up-one-controller-per-model)
+  * [2. Configure your API controller routes](#2-configure-your-api-controller-routes)
+  * [3. Verify your setup](#3-verify-your-setup)
+* [Modifying the default API behaviour](#modifying-the-default-api-behaviour)
+  * [Client authentication](#client-authentication)
+  * [Access control](#access-control)
+  * [Overriding an API end-point](#overriding-an-api-end-point)
+* [Implementation status](#implementation-status)
+* [Contributing](#contributing)
+* [License](#license)
 
 ## Installation
 *jsonapi_for_rails* is not production-ready yet, and the suggested installation steps reflect that fact.
