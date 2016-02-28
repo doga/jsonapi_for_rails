@@ -5,7 +5,7 @@ A [Rails](http://rubyonrails.org/) 4+ plugin for providing a [JSONAPI v1.0](http
   * [Official version](#official-version)
   * [Edge version](#edge-version)
 * [Usage](#usage)
-  * [1. Set up one API controller per model](#1-set-up-one-controller-per-model)
+  * [1. Set up one API controller per model](#1-set-up-one-api-controller-per-model)
   * [2. Configure your API controller routes](#2-configure-your-api-controller-routes)
   * [3. Verify your setup](#3-verify-your-setup)
 * [Modifying the default API behaviour](#modifying-the-default-api-behaviour)
