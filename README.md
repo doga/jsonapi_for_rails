@@ -17,7 +17,6 @@ A [Rails](http://rubyonrails.org/) 4+ plugin for providing [JSONAPI v1.0](http:/
 * [License](#license)
 
 ## Installation
-*jsonapi_for_rails* is not production-ready yet, and the suggested installation steps reflect that fact.
 
 ### Official version
 
@@ -27,9 +26,7 @@ $ cd path/to/railsapp
 $
 $ # Update the gem file
 $ cat >> Gemfile
-group :development, :test do
-  gem 'jsonapi_for_rails'
-end
+gem 'jsonapi_for_rails'
 $
 $ # Install
 $ bundle install
@@ -47,9 +44,7 @@ $
 ```bash
 $ cd path/to/railsapp
 $ cat >> Gemfile
-group :development, :test do
-  gem 'jsonapi_for_rails', git: 'https://github.com/doga/jsonapi_for_rails.git'
-end
+gem 'jsonapi_for_rails', git: 'https://github.com/doga/jsonapi_for_rails.git'
 $ bundle install
 ```
 
