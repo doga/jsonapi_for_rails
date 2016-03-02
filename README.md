@@ -2,12 +2,10 @@
 A [Rails](http://rubyonrails.org/) 4+ plugin for providing [JSONAPI v1.0](http://jsonapi.org/format/1.0/) compliant APIs from your application with very little coding.
 
 * [Installation](#installation)
-  * [Official version](#official-version)
-  * [Edge version](#edge-version)
 * [Usage](#usage)
-  * [1. Set up one API controller per model](#1-set-up-one-api-controller-per-model)
-  * [2. Configure your API controller routes](#2-configure-your-api-controller-routes)
-  * [3. Verify your setup](#3-verify-your-setup)
+  1. [Set up one API controller per model](#1-set-up-one-api-controller-per-model)
+  2. [Configure your API controller routes](#2-configure-your-api-controller-routes)
+  3. [Verify your setup](#3-verify-your-setup)
 * [Modifying the default API behaviour](#modifying-the-default-api-behaviour)
   * [Client authentication](#client-authentication)
   * [Access control](#access-control)
@@ -18,9 +16,10 @@ A [Rails](http://rubyonrails.org/) 4+ plugin for providing [JSONAPI v1.0](http:/
 
 ## Installation
 
-### Official version
-
 ```bash
+$ # Optional security step (do this once)
+$ gem cert --add <(curl -Ls https://raw.githubusercontent.com/doga/jsonapi_for_rails/master/certs/doga.pem)
+$
 $ # Go to the root directory of your existing Rails application
 $ cd path/to/railsapp
 $
@@ -29,7 +28,8 @@ $ cat >> Gemfile
 gem 'jsonapi_for_rails'
 $
 $ # Install
-$ bundle install
+$ # Optional security paramater: --trust-policy MediumSecurity
+$ bundle install --trust-policy MediumSecurity
 $
 $ # Check the used version
 $ bin/rails console
@@ -37,15 +37,6 @@ irb(main):001:0> JsonapiForRails::VERSION
 => "0.1.4"
 irb(main):002:0> exit
 $
-```
-
-### Edge version
-
-```bash
-$ cd path/to/railsapp
-$ cat >> Gemfile
-gem 'jsonapi_for_rails', git: 'https://github.com/doga/jsonapi_for_rails.git'
-$ bundle install
 ```
 
 ## Usage
