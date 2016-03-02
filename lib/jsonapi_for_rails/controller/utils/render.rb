@@ -34,9 +34,10 @@ module JsonapiForRails::Controller
 					render(
 						plain:        @jsonapi_json,
 						#json:         @jsonapi_json, 
-						status:       @jsonapi_status, 
-						content_type: @jsonapi_content_type
+						status:       @jsonapi_status
+						#content_type: @jsonapi_content_type
 					)
+					response.headers['Content-Type'] = @jsonapi_content_type
 				end
 
 				def render_error status, title
@@ -52,9 +53,10 @@ module JsonapiForRails::Controller
 					render(
 						plain:        @jsonapi_json,
 						#json:         @jsonapi_json, 
-						status:       @jsonapi_status, 
-						content_type: @jsonapi_content_type
+						status:       @jsonapi_status
+						#content_type: @jsonapi_content_type
 					)
+					response.headers['Content-Type'] = @jsonapi_content_type
 				end
 			end
 

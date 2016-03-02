@@ -34,7 +34,7 @@ $
 $ # Check the used version
 $ bin/rails console
 irb(main):001:0> JsonapiForRails::VERSION
-=> "0.1.7"
+=> "0.1.8"
 irb(main):002:0> exit
 $
 ```
@@ -142,7 +142,6 @@ $ curl 'http://localhost:3000/api/v1/articles'
     }
   ]
 }
-$
 $ # Get an article
 $ curl 'http://localhost:3000/api/v1/articles/618037523'
 {
@@ -164,9 +163,8 @@ $ curl 'http://localhost:3000/api/v1/articles/618037523'
       }
     }
   }
-}
-$
-$ # Get only the title and author of an article, include the author's name
+}$
+ # Get only the title and author of an article, include the author's name
 $ curl 'http://localhost:3000/api/v1/articles/618037523?filter%5Barticles%5D=title,author;include=author;filter%5Bauthors%5D=name'
 {
   "data": {

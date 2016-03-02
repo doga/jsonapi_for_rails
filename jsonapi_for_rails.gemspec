@@ -1,9 +1,10 @@
+# Gem description, including dependencies
+# (see http://guides.rubygems.org/specification-reference/)
+
 # Require gem modules and classes
 $LOAD_PATH.push File.expand_path('../lib', __FILE__)
-# Maintain your gem's version
 require 'jsonapi_for_rails/version'
 
-# Gem description, including dependencies
 Gem::Specification.new do |s|
 
   # Metadata #############################################################
@@ -42,6 +43,8 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = []
   #s.rdoc_options << '--title' << 'Jsonapi for Rails'
 
+  # This message will be displayed after the gem is installed.
+  #s.post_install_message = ''
 
   # Implementation #######################################################
   s.files = Dir[
