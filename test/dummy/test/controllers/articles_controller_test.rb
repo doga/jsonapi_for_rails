@@ -59,7 +59,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       get articles_path 
     end
     #$stderr.puts "#{@response.inspect}" 
-    $stderr.puts "response.body: #{response.body}" 
+    #$stderr.puts "response.body: #{response.body}" 
 
     assert_response :success
     json = JSON.parse response.body, symbolize_names: true

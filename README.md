@@ -28,13 +28,13 @@ $ cat >> Gemfile
 gem 'jsonapi_for_rails'
 $
 $ # Install
-$ # Optional security paramater: --trust-policy MediumSecurity
+$ # (Optional security paramater: --trust-policy MediumSecurity)
 $ bundle install --trust-policy MediumSecurity
 $
 $ # Check the used version
 $ bin/rails console
 irb(main):001:0> JsonapiForRails::VERSION
-=> "0.1.5"
+=> "0.1.6"
 irb(main):002:0> exit
 $
 ```
@@ -128,16 +128,77 @@ After populating your database and launching the built-in Rails server with the 
 
 ```bash
 $ # Get the list of articles
+$ # (the response body is prettified when the Rails environment is 'development' or 'test')
 $ curl 'http://localhost:3000/api/v1/articles'
-{"data":[{"type":"articles","id":"618037523"},{"type":"articles","id":"184578894"},{"type":"articles","id":"388548390"},{"type":"articles","id":"994552601"}]}
+{
+  "data": [
+    {
+      "type": "articles",
+      "id": "618037523"
+    },
+    {
+      "type": "articles",
+      "id": "994552601"
+    }
+  ]
+}
 $
 $ # Get an article
 $ curl 'http://localhost:3000/api/v1/articles/618037523'
-{"data":{"type":"articles","id":"618037523","attributes":{"title":"UK bank pay and bonuses in the spotlight as results season starts","content":"The pay deals handed to the bosses of Britain’s biggest banks will be in focus this week ...","created_at":"2016-02-26T16:18:39.265Z","updated_at":"2016-02-26T16:18:39.265Z"},"relationships":{"author":{"data":{"type":"authors","id":"1023487079"}}}}}
+{
+  "data": {
+    "type": "articles",
+    "id": "618037523",
+    "attributes": {
+      "title": "UK bank pay and bonuses in the spotlight as results season starts",
+      "content": "The pay deals handed to the bosses of Britain’s biggest banks ...",
+      "created_at": "2016-03-02 14:33:49 UTC",
+      "updated_at": "2016-03-02 14:33:49 UTC"
+    },
+    "relationships": {
+      "author": {
+        "data": {
+          "type": "authors",
+          "id": "1023487079"
+        }
+      },
+    }
+  }
+}
 $
 $ # Get only the title and author of an article, include the author's name
 $ curl 'http://localhost:3000/api/v1/articles/618037523?filter%5Barticles%5D=title,author;include=author;filter%5Bauthors%5D=name'
-{"data":{"type":"articles","id":"618037523","attributes":{"title":"UK bank pay and bonuses in the spotlight as results season starts"},"relationships":{"author":{"data":{"type":"authors","id":"1023487079"}}}},"include":[{"data":{"type":"authors","id":"1023487079","attributes":{"name":"Jill ..."},"relationships":{}}}]}
+{
+  "data": {
+    "type": "articles",
+    "id": "618037523",
+    "attributes": {
+      "title": "UK bank pay and bonuses in the spotlight as results season starts"
+    },
+    "relationships": {
+      "author": {
+        "data": {
+          "type": "authors",
+          "id": "1023487079"
+        }
+      }
+    }
+  },
+  "include": [
+    {
+      "data": {
+        "type": "authors",
+        "id": "1023487079",
+        "attributes": {
+          "name": "Jill T..."
+        },
+        "relationships": {
+        }
+      }
+    }
+  ]
+}
+$
 ```
 
 ## Modifying the default API behaviour

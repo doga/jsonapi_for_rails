@@ -1,3 +1,5 @@
+require 'json'
+
 module JsonapiForRails::Controller
 
 	module Utils
@@ -25,30 +27,33 @@ module JsonapiForRails::Controller
 						return
 					end
 
-					@status = 200
-					@json = object
-					@content_type = JSONAPI[:content_type]
+					@jsonapi_status = 200
+					@jsonapi_json = ['development', 'test'].include?(Rails.env) ? JSON.pretty_generate(object) : JSON.generate(object)
+					@jsonapi_content_type = JSONAPI[:content_type]
 
 					render(
-						json:         @json, 
-						status:       @status, 
-						content_type: @content_type
+						plain:        @jsonapi_json,
+						#json:         @jsonapi_json, 
+						status:       @jsonapi_status, 
+						content_type: @jsonapi_content_type
 					)
 				end
 
 				def render_error status, title
-					@status = status
-					@json = {
+					@jsonapi_status = status
+					object = {
 						errors: [
 							{title: title}
 						]
 					}
-					@content_type = JSONAPI[:content_type]
+					@jsonapi_json = ['development', 'test'].include?(Rails.env) ? JSON.pretty_generate(object) : JSON.generate(object)
+					@jsonapi_content_type = JSONAPI[:content_type]
 
 					render(
-						json:         @json, 
-						status:       @status, 
-						content_type: @content_type
+						plain:        @jsonapi_json,
+						#json:         @jsonapi_json, 
+						status:       @jsonapi_status, 
+						content_type: @jsonapi_content_type
 					)
 				end
 			end
