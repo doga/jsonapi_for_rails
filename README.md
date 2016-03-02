@@ -34,7 +34,7 @@ $
 $ # Check the used version
 $ bin/rails console
 irb(main):001:0> JsonapiForRails::VERSION
-=> "0.1.4"
+=> "0.1.5"
 irb(main):002:0> exit
 $
 ```
