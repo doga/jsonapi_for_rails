@@ -34,7 +34,7 @@ $
 $ # Check the used version
 $ bin/rails console
 irb(main):001:0> JsonapiForRails::VERSION
-=> "0.1.6"
+=> "0.1.7"
 irb(main):002:0> exit
 $
 ```
@@ -161,7 +161,7 @@ $ curl 'http://localhost:3000/api/v1/articles/618037523'
           "type": "authors",
           "id": "1023487079"
         }
-      },
+      }
     }
   }
 }
