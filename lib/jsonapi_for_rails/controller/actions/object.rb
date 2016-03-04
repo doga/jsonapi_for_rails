@@ -28,10 +28,10 @@ module JsonapiForRails::Controller
 						if attrs
 							if @jsonapi_record
 								# update
-								@jsonapi_record.update! attrs
+								@jsonapi_record.update attrs
 							else
 								# create
-								@jsonapi_record = jsonapi_model_class.create! attrs
+								@jsonapi_record = jsonapi_model_class.create attrs
 							end
 						end
 
