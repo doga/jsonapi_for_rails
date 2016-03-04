@@ -64,22 +64,31 @@ module JsonapiForRails::Model
 					end
 				end
 
-				# message
-				{
-=begin
-					meta: {
-						generated_by_class: "#{self.class}"
-					},
-=end
-					data: {
-						type:       jsonapi_model_type,
-						id:         self.id.to_s,
+			
 
-						attributes: attrs,
-
-						relationships: relationships
-					}
-				}
+				return_data = {}
+				if not valid? then
+					return_data[:errors] =  self.errors.messages.keys.inject([]) do |errors, error_type|
+						new_errors = self.errors.messages[error_type].collect do |error|
+							{
+								detail: error,
+								source: {
+									pointer:"data/attributes/#{error_type.to_s}"
+								}
+							} 
+						end
+						errors = errors.concat(new_errors)
+					end
+					else
+						return_data[:data] = {
+							type:       jsonapi_model_type,
+							id:         self.id.to_s,
+							attributes: attrs,
+							relationships: relationships
+						}
+					end
+					
+				return_data
 
 			end
 
