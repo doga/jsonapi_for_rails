@@ -90,7 +90,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     #$stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
-    #$stderr.puts "#{json}" 
+    $stderr.puts JSON.pretty_generate json
     
     assert json
     assert json[:data]
@@ -125,8 +125,8 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     #@request.env['CONTENT_TYPE']     = 'application/vnd.api+json'
     #@request.accept = 'application/vnd.api+json'
     #@request.headers['Content-Type'] = 'application/vnd.api+json'
-    $stderr.puts "0000000000000000000000 setting author" 
-    $stderr.puts "#{@request.env.inspect}" 
+    #$stderr.puts "0000000000000000000000 setting author" 
+    #$stderr.puts "#{@request.env.inspect}" 
 
     patch(
       "#{article_path articles(:suede_boots)}/relationships/author",

@@ -6,7 +6,7 @@ module JsonapiForRails::Model
 
 		# Define instance methods
 		class_exec do
-			def to_jsonapi_hash sparse_fieldset=nil
+			def to_jsonapi_hash sparse_fieldset: nil
 				#$stderr.puts "JsonapiForRails::Controller::Actions::Object#show called" 
 
 				# attributes

@@ -72,9 +72,30 @@ module JsonapiForRails::Controller
 				end
 
 				def show
+					# Attributes and relationships
 					@json = @jsonapi_record.to_jsonapi_hash(
-						@jsonapi_sparse_fieldsets[jsonapi_model_type]
+						 sparse_fieldset: @jsonapi_sparse_fieldsets[jsonapi_model_type]
 					)
+
+					# Links
+					if @jsonapi_links
+
+						# Current resource
+						@json[:data][:links] = {
+							self: self.send(
+								"#{jsonapi_model_type.to_s.singularize}_path", # TODO: factor out
+								@jsonapi_record.id
+							)
+						}
+
+						# Related resources
+						@json[:data][:relationships].each do |rel_name, rel|
+							rel[:links] = {
+								self: "#{@json[:data][:links][:self]}/relationships/#{rel_name}"
+							}
+						end
+					end
+
 					#$stderr.puts "#{@json}" 
 
 					# Include resources
@@ -98,9 +119,22 @@ module JsonapiForRails::Controller
 								r = klass.find_by_id r[:id]
 								next unless r
 
-								@json[:include] << r.to_jsonapi_hash(
-									@jsonapi_sparse_fieldsets[type]
+								# Attributes and relationships
+								r = r.to_jsonapi_hash(
+									sparse_fieldset: @jsonapi_sparse_fieldsets[type]
 								)
+
+								# Links
+								if @jsonapi_links
+									r[:links] = {
+										self: self.send(
+											"#{r[:data][:type].to_s.singularize}_path", # TODO: factor out
+											r[:data][:id]
+										)
+									}
+								end
+
+								@json[:include] << r
 							end
 						end
 					end

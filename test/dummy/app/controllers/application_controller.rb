@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery with: :exception
 
   acts_as_jsonapi_resources(
-    content_negotiation: false
+    content_negotiation: false,
+    links:               true
   )
 end

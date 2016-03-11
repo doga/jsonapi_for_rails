@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
-  before_action :log_request
-  after_action  :log_response
+  #before_action :log_request
+  #after_action  :log_response
 
 =begin
   def index

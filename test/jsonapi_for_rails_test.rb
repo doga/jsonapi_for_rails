@@ -35,8 +35,13 @@ class JsonapiForRails::Test < ActiveSupport::TestCase
     assert ApplicationController.methods.find{|m| m == :acts_as_jsonapi_resources}, "plugin did not modify controller classes"
   end
 
-  test "Plugin adds 'to_jsonapi_hash' instance method to models" do
+  test "Plugin adds 'to_jsonapi_hash' and 'to_jsonapi_errors_hash' instance method to models" do
     #$stderr.puts "#{ApplicationRecord.instance_methods.reject{|m| m != :to_jsonapi_hash}}" 
-    assert_equal 1, ApplicationRecord.instance_methods.reject{|m| m != :to_jsonapi_hash}.size, "plugin did not modify model classes"
+    assert_equal 2, ApplicationRecord.instance_methods.select{ |m|
+      [
+        :to_jsonapi_hash, 
+        :to_jsonapi_errors_hash
+      ].include?(m)
+    }.size, "plugin did not modify model classes"
   end
 end

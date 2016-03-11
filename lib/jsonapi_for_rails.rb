@@ -4,10 +4,9 @@
 # TODO: Location header
 # TODO: add 'links' to documents 
 # TODO: return conformant HTTP status codes
-# TODO: options for 'acts_as_jsonapi_resources'? example: {content_negotiation: false}
 # TODO: adding optional members to documents ('jsonapi', 'meta')
 # TODO: conformant and rich 'errors' member
-# TODO: should included resources list their relationships (which links to primary object)?
+# TODO: included resource objects must not contain a relationship that links back to the primary object
 # TODO: do not support Client-Generated IDs?
 
 # TODO: README.md: double-check the installation instructions
