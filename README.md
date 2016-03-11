@@ -34,7 +34,7 @@ $
 $ # Check the used version
 $ bin/rails console
 irb(main):001:0> JsonapiForRails::VERSION
-=> "0.1.8"
+=> "0.2.0.pre"
 irb(main):002:0> exit
 $
 ```
@@ -134,7 +134,7 @@ After populating your database and launching the built-in Rails server with the 
 
 ```bash
 $ # Get the list of articles
-$ # (the response body is prettified when the Rails environment is 'development' or 'test')
+$ # (the returned HTTP response body is short and terse, but it is prettified here for legibility)
 $ curl 'http://localhost:3000/api/v1/articles'
 {
   "data": [
@@ -278,7 +278,8 @@ class ArticlesController < JsonapiResourcesController
     # @jsonapi_record contains the current database record.
     # It is available inside all action methods (including all relationship
     # methods) except :index and :create.
-    @jsonapi_record.to_jsonapi_hash # => {data: {...}}
+    @jsonapi_record.to_jsonapi_hash        # => {data:   {...}}
+    @jsonapi_record.to_jsonapi_errors_hash # => {errors: [...]}
 
     # ...
   end

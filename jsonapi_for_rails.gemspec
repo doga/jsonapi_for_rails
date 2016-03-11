@@ -25,17 +25,6 @@ Gem::Specification.new do |s|
 
   if s.respond_to? :metadata=
     s.metadata = {
-      # List of RubyGems.org metadata that can be set manually on the gem webpage.
-      # - Source Code URL
-      'code' => 'https://github.com/doga/jsonapi_for_rails',
-      # - Documentation URL
-      'docs' => 'https://github.com/doga/jsonapi_for_rails#jsonapiforrails',
-      # - Wiki URL
-      'wiki' => '',
-      # - Mailing List URL
-      'mail' => '',
-      # - Bug Tracker URL
-      'bugs' => 'https://github.com/doga/jsonapi_for_rails/issues'
     }
   end
 
