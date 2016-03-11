@@ -1,3 +1,5 @@
+# Rakefile format: http://rake.rubyforge.org/files/doc/rakefile_rdoc.html
+
 begin
   require 'bundler/setup'
 rescue LoadError

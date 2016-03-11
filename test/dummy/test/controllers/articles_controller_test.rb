@@ -1,5 +1,7 @@
 require 'test_helper'
 
+# TODO: how to set the damn Content-Type header in requests? 
+
 class ArticlesControllerTest < ActionDispatch::IntegrationTest
   test "'@jsonapi_record' is set and '@jsonapi_relationship' is not set when inside 'show' action" do
     get "#{article_path articles(:uk_bank_and_bonuses)}"
@@ -119,18 +121,41 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
     # set author
     # Rails BUG: headers can't be set
-    request.headers['Accept'] = 'application/vnd.api+json'
-    request.headers['Content-Type'] = 'application/vnd.api+json'
+    #@request.env['ACCEPT']           = 'application/vnd.api+json'
+    #@request.env['CONTENT_TYPE']     = 'application/vnd.api+json'
+    #@request.accept = 'application/vnd.api+json'
+    #@request.headers['Content-Type'] = 'application/vnd.api+json'
+    $stderr.puts "0000000000000000000000 setting author" 
+    $stderr.puts "#{@request.env.inspect}" 
+
     patch(
       "#{article_path articles(:suede_boots)}/relationships/author",
+      headers: {
+        'HTTP_ACCEPT' => 'application/vnd.api+json'
+      },
       xhr: true,
       params: {
         data: {
           type: :authors,
-          id:   authors(:press_association).id.to_s
+          id:    authors(:press_association).id.to_s
         }
       }
     )
+
+=begin
+    patch("#{article_path articles(:suede_boots)}/relationships/author",
+      {
+        data: {
+          type: :authors,
+          id:    authors(:press_association).id.to_s
+        }
+      },
+      {
+        'HTTP_ACCEPT' => 'application/vnd.api+json'
+      }
+    )
+=end
+
     assert_response :success
 
     # author is press_association

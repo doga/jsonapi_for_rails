@@ -26,7 +26,7 @@ module JsonapiForRails::Controller
 					@jsonapi_relationship = received_relationships.first
 					return if @jsonapi_relationship
 
-					render_error 401, "Bad request."
+					render_errors 401, "Bad request."
 				end
 			end
 		end

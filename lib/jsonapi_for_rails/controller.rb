@@ -17,12 +17,12 @@ module JsonapiForRails::Controller
 	end
 
 	class_methods do
-		def acts_as_jsonapi_resources model: nil
+		def acts_as_jsonapi_resources content_negotiation: true #, model: nil
 			#$stderr.puts "JsonapiForRails::Controller macro called from #{self}:\n  acts_as_jsonapi_resources(model: #{model or 'nil'})" 
 
 			include JsonapiForRails::Controller::Utils::Model
 			include JsonapiForRails::Controller::Utils::Render
-			include JsonapiForRails::Controller::BeforeActions::ContentNegotiation
+			include JsonapiForRails::Controller::BeforeActions::ContentNegotiation if content_negotiation
 			include JsonapiForRails::Controller::BeforeActions::SparseFieldsets
 			include JsonapiForRails::Controller::BeforeActions::Include
 			include JsonapiForRails::Controller::BeforeActions::Record

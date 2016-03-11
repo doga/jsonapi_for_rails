@@ -1,11 +1,14 @@
-# TODO: JSONAPI: adding optional members to documents ('jsonapi', 'meta')
-# TODO: JSONAPI: return conformant HTTP status codes
-# TODO: JSONAPI: conformant and rich 'errors' member
-# TODO: JSONAPI: content negotiation
-# TODO: JSONAPI: apply sparse fieldsets _after_ including related resources
-# TODO: JSONAPI: should included resources list their relationships (which links to primary object)?
-# TODO: JSONAPI: do not support Client-Generated IDs?
-# TODO: JSONAPI: Location header
+
+# TODO: content negotiation tests
+# TODO: apply sparse fieldsets _after_ including related resources
+# TODO: Location header
+# TODO: add 'links' to documents 
+# TODO: return conformant HTTP status codes
+# TODO: options for 'acts_as_jsonapi_resources'? example: {content_negotiation: false}
+# TODO: adding optional members to documents ('jsonapi', 'meta')
+# TODO: conformant and rich 'errors' member
+# TODO: should included resources list their relationships (which links to primary object)?
+# TODO: do not support Client-Generated IDs?
 
 # TODO: README.md: double-check the installation instructions
 # TODO: README.md: describe @jsonapi_include ?

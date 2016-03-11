@@ -70,6 +70,12 @@ class ApplicationController < ActionController::Base # or ActionController::API
 end
 ```
 
+`acts_as_jsonapi_resources` accepts the following keyword arguments:
+
+* `content_negotiation`: Set this to `false` to disable
+  [content negotiation](http://jsonapi.org/format/1.0/#content-negotiation).
+  Default value is `true`. Usage example: `acts_as_jsonapi_resources content_negotiation: false`
+
 If only some of your controllers are JSONAPI controllers, then create a parent controller for only those controllers, and enable JSONAPI inside that controller rather than `ApplicationController`. 
 
 ```bash
@@ -303,6 +309,7 @@ The internal architecture is sound. Test coverage is currently being bulked up u
 
 Feature support roundup:
 
+* [Content negotiation](http://jsonapi.org/format/1.0/#content-negotiation) is not implemented.
 * [Inclusion of related resources](http://jsonapi.org/format/1.0/#fetching-includes) is currently only implemented for requests that return a single resource, and relationship paths are not supported. 
 * [Sparse fieldsets](http://jsonapi.org/format/1.0/#fetching-sparse-fieldsets) is currently only implemented for requests that return a single resource. 
 * [Sorting](http://jsonapi.org/format/1.0/#fetching-sorting) is currently not implemented.

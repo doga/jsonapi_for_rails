@@ -25,6 +25,7 @@ module JsonapiForRails::Model
 					if sparse_fieldset
 						next unless sparse_fieldset.find{|f| association.name == f}
 					end
+
 					relationship = {}
 					relationships[association.name] = relationship
 
@@ -47,7 +48,6 @@ module JsonapiForRails::Model
 
 					# to-one relationship
 					elsif [
-
 						ActiveRecord::Reflection::HasOneReflection, 
 						ActiveRecord::Reflection::BelongsToReflection
 						].include? association.class
@@ -66,25 +66,35 @@ module JsonapiForRails::Model
 
 				# message
 				{
-=begin
-					meta: {
-						generated_by_class: "#{self.class}"
-					},
-=end
 					data: {
-						type:       jsonapi_model_type,
-						id:         self.id.to_s,
-
-						attributes: attrs,
-
+						type:          jsonapi_model_type,
+						id:            self.id.to_s,
+						attributes:    attrs,
 						relationships: relationships
 					}
 				}
 
 			end
 
+			def to_jsonapi_errors_hash
+				{
+					errors: errors.messages.to_a.reduce([]){ |result, key_value|
+						attribute = key_value.first
+						messages  = key_value.last
+						result + messages.map{ |message|
+							{
+								detail:     message,
+								source: {
+									pointer: "/data/attributes/#{attribute}",
+								}
+							}
+						}
+					}
+				}
+			end
+
 			def jsonapi_model_type
-				"#{self.class}".underscore.pluralize.to_sym
+				self.class.to_s.underscore.pluralize.to_sym
 			end
 
 			private :jsonapi_model_type

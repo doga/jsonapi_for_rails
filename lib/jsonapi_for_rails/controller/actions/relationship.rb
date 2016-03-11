@@ -35,7 +35,7 @@ module JsonapiForRails::Controller
 				# PATCH
 				def relationship_update
 					if @jsonapi_relationship[:definition][:type] == :to_many
-						render_error 403, 'Replacing all members of a to-many relationship is forbidden.'
+						render_errors 403, 'Replacing all members of a to-many relationship is forbidden.'
 						return
 					end
 
@@ -45,7 +45,7 @@ module JsonapiForRails::Controller
 							@jsonapi_relationship[:params][:data][:id]
 						)
 						unless related
-							render_error 403, 'Record not found.'
+							render_errors 403, 'Record not found.'
 							return
 						end
 					end
@@ -57,7 +57,7 @@ module JsonapiForRails::Controller
 				# POST for to-many relations only
 				def relationship_add
 					unless @jsonapi_relationship[:definition][:type] == :to_many
-						render_error 403, 'Operation allowed for to-many relationships only.'
+						render_errors 403, 'Operation allowed for to-many relationships only.'
 						return
 					end
 					
@@ -66,7 +66,7 @@ module JsonapiForRails::Controller
 							record[:id]
 						)
 						unless record
-							render_error 403, "Non-existing record #{record.inspect}."
+							render_errors 403, "Non-existing record #{record.inspect}."
 							return
 						end
 						record
@@ -80,7 +80,7 @@ module JsonapiForRails::Controller
 				# DELETE for to-many relations only
 				def relationship_remove
 					unless @jsonapi_relationship[:definition][:type] == :to_many
-						render_error 403, 'Operation allowed for to-many relationships only.'
+						render_errors 403, 'Operation allowed for to-many relationships only.'
 						return
 					end
 					
@@ -89,7 +89,7 @@ module JsonapiForRails::Controller
 							record[:id]
 						)
 						unless record
-							render_error 403, "Non-existing record #{record.inspect}."
+							render_errors 403, "Non-existing record #{record.inspect}."
 							return
 						end
 						record

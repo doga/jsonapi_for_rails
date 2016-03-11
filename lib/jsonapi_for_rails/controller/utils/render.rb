@@ -11,51 +11,68 @@ module JsonapiForRails::Controller
 
 			JSONAPI = {
 				specification: 'http://jsonapi.org/format/',
-				content_type: 'application/vnd.api+json'
+				content_type: 'application/vnd.api+json',
+				media_range: [
+					'*/*',
+					'application/*',
+					'application/vnd.api+json'
+				]
 			}.freeze
 
 			def self.run_macros receiver
 				receiver.instance_exec do 
-					private :render_json, :render_error
+					private :render_json, :render_errors
 				end
 			end
 
 			module InstanceMethods
 				def render_json object
-					unless object
-						render_error 500, 'No message specified.'
-						return
-					end
-
+					# Status code
 					@jsonapi_status = 200
-					@jsonapi_json = ['development', 'test'].include?(Rails.env) ? JSON.pretty_generate(object) : JSON.generate(object)
-					@jsonapi_content_type = JSONAPI[:content_type]
 
+					# Generate json
+					@jsonapi_json = JSON.generate(object)
+
+					# Render
 					render(
 						plain:        @jsonapi_json,
-						#json:         @jsonapi_json, 
 						status:       @jsonapi_status
-						#content_type: @jsonapi_content_type
 					)
+
+					# Set content type
+					@jsonapi_content_type = JSONAPI[:content_type]
 					response.headers['Content-Type'] = @jsonapi_content_type
 				end
 
-				def render_error status, title
+				def render_errors status, argument
+					# Status code
 					@jsonapi_status = status
-					object = {
-						errors: [
-							{title: title}
-						]
-					}
-					@jsonapi_json = ['development', 'test'].include?(Rails.env) ? JSON.pretty_generate(object) : JSON.generate(object)
-					@jsonapi_content_type = JSONAPI[:content_type]
 
+					# Generate json
+					if argument.kind_of? Hash
+						message = argument
+					elsif argument.kind_of? Array
+						message = {
+							errors: argument
+						}
+					else
+						message = {
+							errors: [
+								{detail: argument.to_s}
+							]
+						}
+					end
+
+					@jsonapi_json = JSON.generate(message)
+
+					# Render
 					render(
 						plain:        @jsonapi_json,
-						#json:         @jsonapi_json, 
 						status:       @jsonapi_status
-						#content_type: @jsonapi_content_type
 					)
+
+					# Set content type
+					@jsonapi_content_type = JSONAPI[:content_type]
 					response.headers['Content-Type'] = @jsonapi_content_type
 				end
 			end

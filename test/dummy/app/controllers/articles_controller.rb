@@ -18,7 +18,7 @@ class ArticlesController < ApplicationController
       # print HTTP request
       $stderr.puts "#{request.request_method} #{request.fullpath}" 
       %w[
-        Accept Content-Type Location
+        Accept Content-Type Content-Length Location
       ].each do |header|
         #$stderr.print "#{request.headers[header].class}" 
         next unless request.headers[header]
@@ -46,7 +46,7 @@ class ArticlesController < ApplicationController
       $stderr.puts "< < < < < < < < <" 
       $stderr.puts "#{response.status}" 
       %w[
-        Content-Type
+        Content-Type Content-Length
       ].each do |header|
         #$stderr.print "#{request.headers[header].class}" 
         next unless response.headers[header]

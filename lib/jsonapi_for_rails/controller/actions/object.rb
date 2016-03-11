@@ -22,8 +22,9 @@ module JsonapiForRails::Controller
 
 				# implements Create and Update operations
 				def create
+
+					# attributes
 					begin
-						# attributes
 						attrs = received_attributes
 						if attrs
 							if @jsonapi_record
@@ -31,38 +32,42 @@ module JsonapiForRails::Controller
 								@jsonapi_record.update! attrs
 							else
 								# create
-								@jsonapi_record = jsonapi_model_class.create! attrs
-							end
-						end
-
-						# relationships
-						received_relationships.each do |relationship|
-							# to-one
-							if relationship[:definition][:type] == :to_one
-								@jsonapi_record.send :"#{relationship[:definition][:name]}=", relationship[:params][:data]
-								next
-							end
-
-							# to-many
-							@jsonapi_record.send(relationship[:definition][:name]).send :clear # initialize the relation
-							
-							relationship[:params][:data].each do |item|
-								object = relationship[:receiver][:class].find_by_id item[:id]
-								@jsonapi_record.send(relationship[:definition][:name]).send :<<, object
+								@jsonapi_record = jsonapi_model_class.new attrs
+								@jsonapi_record.save!
 							end
 						end
 					rescue NameError => e
-
-						# error when creating record			
-						render_error 500, "Model class not found."
+						render_errors 500, "Model class not found."
 						return
 					rescue 
-						# error when creating relationship?
-						@jsonapi_record.destroy if @jsonapi_record 
-
-						render_error 500, "Record could not be created."
+						render_errors 500, @jsonapi_record.to_jsonapi_errors_hash
 						return
 					end
+
+					# relationships
+					received_relationships.each do |relationship|
+						begin
+								# to-one
+								if relationship[:definition][:type] == :to_one
+									@jsonapi_record.send :"#{relationship[:definition][:name]}=", relationship[:params][:data]
+									next
+								end
+
+								# to-many
+								@jsonapi_record.send(relationship[:definition][:name]).send :clear # initialize the relation
+								
+								relationship[:params][:data].each do |item|
+									object = relationship[:receiver][:class].find_by_id item[:id]
+									@jsonapi_record.send(relationship[:definition][:name]).send :<<, object
+								end
+
+						rescue 
+							# Should not happen
+							render_errors 500, "Relationship could not be created."
+							return
+						end
+					end
+
 					show
 				end
 
@@ -108,7 +113,7 @@ module JsonapiForRails::Controller
 				end
 
 				def destroy
-					render_error 500, "Not implemented."
+					render_errors 500, "Not implemented."
 				end
 
 				# private
