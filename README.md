@@ -169,8 +169,8 @@ $ curl 'http://localhost:3000/api/v1/articles/618037523'
       }
     }
   }
-}$
- # Get only the title and author of an article, include the author's name
+}
+$ # Get only the title and author of an article, include the author's name
 $ curl 'http://localhost:3000/api/v1/articles/618037523?filter%5Barticles%5D=title,author;include=author;filter%5Bauthors%5D=name'
 {
   "data": {
