@@ -3,7 +3,10 @@ require 'test_helper'
 # TODO: how to set the damn Content-Type header in requests? 
 
 class ArticlesControllerTest < ActionDispatch::IntegrationTest
+  
+
   test "'@jsonapi_record' is set and '@jsonapi_relationship' is not set when inside 'show' action" do
+    #skip
     get "#{article_path articles(:uk_bank_and_bonuses)}"
     record = @controller.instance_variable_get('@jsonapi_record')
     relationship = @controller.instance_variable_get('@jsonapi_relationship')
@@ -16,6 +19,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "'@jsonapi_record' and '@jsonapi_relationship' are set when inside 'relationship_show' action" do
+    #skip
     get "#{article_path articles(:uk_bank_and_bonuses)}/relationships/author"
     record = @controller.instance_variable_get('@jsonapi_record')
     relationship = @controller.instance_variable_get('@jsonapi_relationship')
@@ -30,6 +34,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "'@jsonapi_record' and '@jsonapi_relationship' are set when inside 'relationship_update' action" do
+    #skip
     patch(
       "#{article_path articles(:uk_bank_and_bonuses)}/relationships/author",
       xhr: true,
@@ -56,6 +61,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
 
   test "get list of articles" do
+    #skip
     # BUG: ArticlesController#index is not called
     assert_no_difference 'Article.count' do
       get articles_path 
@@ -78,6 +84,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "get article"  do
+    #skip
     get article_path(articles(:uk_bank_and_bonuses)), {
       params: {
         'fields[articles]' => 'title,author',
@@ -113,21 +120,16 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     #$stderr.puts "#{author.inspect}" 
   end
 
+
   test "set related author" do
-    # author isn't press_association
+    # verify that author isn't press_association
     get "#{article_path articles(:suede_boots)}/relationships/author"
     assert_response :success
+    #$stderr.puts "current author: #{response.body}" 
     assert_nil(response.body.index authors(:press_association).id.to_s)
 
     # set author
-    # Rails BUG: headers can't be set
-    #@request.env['ACCEPT']           = 'application/vnd.api+json'
-    #@request.env['CONTENT_TYPE']     = 'application/vnd.api+json'
-    #@request.accept = 'application/vnd.api+json'
-    #@request.headers['Content-Type'] = 'application/vnd.api+json'
-    #$stderr.puts "0000000000000000000000 setting author" 
-    #$stderr.puts "#{@request.env.inspect}" 
-
+    #$stderr.puts "new author: #{authors(:press_association).inspect}" 
     patch(
       "#{article_path articles(:suede_boots)}/relationships/author",
       headers: {
@@ -142,30 +144,18 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       }
     )
 
-=begin
-    patch("#{article_path articles(:suede_boots)}/relationships/author",
-      {
-        data: {
-          type: :authors,
-          id:    authors(:press_association).id.to_s
-        }
-      },
-      {
-        'HTTP_ACCEPT' => 'application/vnd.api+json'
-      }
-    )
-=end
-
     assert_response :success
 
-    # author is press_association
+    # verify that author is press_association
     get "#{article_path articles(:suede_boots)}/relationships/author"
+    #$stderr.puts "current author: #{response.body}" 
     assert_response :success
     assert(response.body.index authors(:press_association).id.to_s)
     
   end
 
   test "get related tags" do
+    #skip
     get "#{article_path articles(:uk_bank_and_bonuses)}/relationships/tags"
 
     assert_response :success
@@ -182,8 +172,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "add related tag" do
-    #skip
+=begin
+  test "set related tags" do
+    ##skip
     patch(
       "#{article_path articles(:suede_boots)}/relationships/tags",
       xhr: true,
@@ -197,13 +188,64 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       }
     )
 
-    $stderr.puts "#{response.body}" 
+    #$stderr.puts "#{response.body}" 
 
     assert_response :success
     json = JSON.parse response.body, symbolize_names: true
     #$stderr.puts "#{json}" 
     
   end
+=end
 
+  test "add related tags" do
+    #skip
+    
+    # verify that business tag has not yet been added #####################
+    get "#{article_path articles(:suede_boots)}/relationships/tags"
+
+    assert_response :success
+    #$stderr.puts "#{response.body}" 
+    json = JSON.parse response.body, symbolize_names: true
+    #$stderr.puts "business tag id: #{tags(:business).id}" 
+    #$stderr.puts "article tags: #{JSON.pretty_generate json}"
+
+    assert          json,               "no json response"
+    refute          json[:errors],      'response is error'
+    assert_kind_of  Array, json[:data],        "response is not articles"
+    refute          json[:data].detect{|item| item[:id] == tags(:business).id.to_s and item[:type] == 'tags'}
+
+    # add business tag ################################
+    post(
+      "#{article_path articles(:suede_boots)}/relationships/tags",
+      xhr: true,
+      params: {
+        data: [
+          {
+            type: :tags,
+            id: tags(:business).id.to_s
+          }
+        ]
+      }
+    )
+
+    #$stderr.puts "#{response.status} #{response.body}" 
+
+    assert_response :success
+    #$stderr.puts "#{json}" 
+    
+    # verify that business tag has been added ############################
+    get "#{article_path articles(:suede_boots)}/relationships/tags"
+
+    assert_response :success
+    #$stderr.puts "#{response.body}" 
+    json = JSON.parse response.body, symbolize_names: true
+    #$stderr.puts "business tag id: #{tags(:business).id}" 
+    #$stderr.puts "article tags: #{JSON.pretty_generate json}"
+
+    assert          json,               "no json response"
+    refute          json[:errors],      'response is error'
+    assert_kind_of  Array, json[:data],        "response is not articles"
+    assert          json[:data].detect{|item| item[:id] == tags(:business).id.to_s and item[:type] == 'tags'}
+  end
 
 end

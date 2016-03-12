@@ -22,11 +22,14 @@ module JsonapiForRails::Controller
 
 			module InstanceMethods
 				def jsonapi_require_relationship
-					#$stderr.puts "JsonapiForRails::Controller::RelationshipFromRequest#jsonapi_require_relationship called" 
-					@jsonapi_relationship = received_relationships.first
+					#$stderr.puts "@@@@@@@@@@@@@@ jsonapi_require_relationship" 
+					#log_request
+					#$stderr.puts "#{jsonapi_received_relationships.inspect}" 
+
+					@jsonapi_relationship = jsonapi_received_relationships.first
 					return if @jsonapi_relationship
 
-					render_errors 401, "Bad request."
+					jsonapi_render_errors 401, "Bad request."
 				end
 			end
 		end

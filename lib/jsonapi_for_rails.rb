@@ -22,5 +22,6 @@ require "jsonapi_for_rails/model"
 ActionController::Metal.send :include, JsonapiForRails::Controller
 
 # Add 'to_jsonapi_hash' instance method to models
+# TODO: ApplicationRecord instead of ActiveRecord::Base
 ActiveRecord::Base.send      :include, JsonapiForRails::Model
 

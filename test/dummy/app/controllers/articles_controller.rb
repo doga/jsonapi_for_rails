@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
-  before_action :log_request
-  after_action  :log_response
+  #before_action :log_request
+  #after_action  :log_response
 
 =begin
   def index
@@ -10,7 +10,7 @@ class ArticlesController < ApplicationController
 
   private
     def log_request
-      return unless (
+      return unless true or (
         request.fullpath.index('/relationships/tags') and 
         request.request_method == 'PATCH'
       )
@@ -35,16 +35,16 @@ class ArticlesController < ApplicationController
       # print jsonapi instance variables
       if false
         $stderr.puts "--" 
-        $stderr.puts "@jsonapi_record: #{@jsonapi_record}" 
-        $stderr.puts "@jsonapi_relationship: #{@jsonapi_relationship}" 
+        $stderr.puts "@jsonapi_record:           #{@jsonapi_record}" 
+        $stderr.puts "@jsonapi_relationship:     #{@jsonapi_relationship}" 
         $stderr.puts "@jsonapi_sparse_fieldsets: #{@jsonapi_sparse_fieldsets}" 
-        $stderr.puts "@jsonapi_include: #{@jsonapi_include}" 
-        $stderr.puts "> > > > > > > > >" 
+        $stderr.puts "@jsonapi_include:          #{@jsonapi_include}" 
       end
+      $stderr.puts "> > > > > > > > >" 
     end
 
     def log_response
-      return unless (
+      return unless true or (
         request.fullpath.index('/relationships/tags') and 
         request.request_method == 'PATCH'
       )

@@ -21,12 +21,12 @@ module JsonapiForRails::Controller
 
 			def self.run_macros receiver
 				receiver.instance_exec do 
-					private :render_json, :render_errors
+					private :jsonapi_render, :jsonapi_render_errors
 				end
 			end
 
 			module InstanceMethods
-				def render_json object
+				def jsonapi_render object
 					# Status code
 					@jsonapi_status = 200
 
@@ -44,7 +44,7 @@ module JsonapiForRails::Controller
 					response.headers['Content-Type'] = @jsonapi_content_type
 				end
 
-				def render_errors status, argument
+				def jsonapi_render_errors status, argument
 					# Status code
 					@jsonapi_status = status
 

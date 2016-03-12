@@ -41,13 +41,13 @@ module JsonapiForRails::Controller
 						}
 					end
 
-					render_json @json
+					jsonapi_render @json
 				end
 
 				# PATCH
 				def relationship_update
 					if @jsonapi_relationship[:definition][:type] == :to_many
-						render_errors 403, 'Replacing all members of a to-many relationship is forbidden.'
+						jsonapi_render_errors 403, 'Replacing all members of a to-many relationship is forbidden.'
 						return
 					end
 
@@ -57,7 +57,7 @@ module JsonapiForRails::Controller
 							@jsonapi_relationship[:params][:data][:id]
 						)
 						unless related
-							render_errors 403, 'Record not found.'
+							jsonapi_render_errors 403, 'Record not found.'
 							return
 						end
 					end
@@ -71,7 +71,7 @@ module JsonapiForRails::Controller
 				# POST for to-many relations only
 				def relationship_add
 					unless @jsonapi_relationship[:definition][:type] == :to_many
-						render_errors 403, 'Operation allowed for to-many relationships only.'
+						jsonapi_render_errors 403, 'Operation allowed for to-many relationships only.'
 						return
 					end
 					
@@ -80,7 +80,7 @@ module JsonapiForRails::Controller
 							record[:id]
 						)
 						unless record
-							render_errors 403, "Non-existing record #{record.inspect}."
+							jsonapi_render_errors 403, "Non-existing record #{record.inspect}."
 							return
 						end
 						record
@@ -96,7 +96,7 @@ module JsonapiForRails::Controller
 				# DELETE for to-many relations only
 				def relationship_remove
 					unless @jsonapi_relationship[:definition][:type] == :to_many
-						render_errors 403, 'Operation allowed for to-many relationships only.'
+						jsonapi_render_errors 403, 'Operation allowed for to-many relationships only.'
 						return
 					end
 					
@@ -105,7 +105,7 @@ module JsonapiForRails::Controller
 							record[:id]
 						)
 						unless record
-							render_errors 403, "Non-existing record #{record.inspect}."
+							jsonapi_render_errors 403, "Non-existing record #{record.inspect}."
 							return
 						end
 						record

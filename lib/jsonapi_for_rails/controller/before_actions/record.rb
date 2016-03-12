@@ -38,7 +38,7 @@ module JsonapiForRails::Controller
 					end
 					#$stderr.puts "@jsonapi_record: #{@jsonapi_record.inspect}" 
 					return if @jsonapi_record
-					render_errors 401, "Bad request."
+					jsonapi_render_errors 401, "Bad request."
 				end
 
 			end

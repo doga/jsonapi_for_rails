@@ -27,7 +27,7 @@ module JsonapiForRails::Controller
 						}
 					end
 
-					render_json @json
+					jsonapi_render @json
 				end
 
 				# implements Create and Update operations
@@ -35,7 +35,7 @@ module JsonapiForRails::Controller
 
 					# attributes
 					begin
-						attrs = received_attributes
+						attrs = jsonapi_received_attributes
 						if attrs
 							if @jsonapi_record
 								# update
@@ -47,15 +47,15 @@ module JsonapiForRails::Controller
 							end
 						end
 					rescue NameError => e
-						render_errors 500, "Model class not found."
+						jsonapi_render_errors 500, "Model class not found."
 						return
 					rescue 
-						render_errors 500, @jsonapi_record.to_jsonapi_errors_hash
+						jsonapi_render_errors 500, @jsonapi_record.to_jsonapi_errors_hash
 						return
 					end
 
 					# relationships
-					received_relationships.each do |relationship|
+					jsonapi_received_relationships.each do |relationship|
 						begin
 								# to-one
 								if relationship[:definition][:type] == :to_one
@@ -73,7 +73,7 @@ module JsonapiForRails::Controller
 
 						rescue 
 							# Should not happen
-							render_errors 500, "Relationship could not be created."
+							jsonapi_render_errors 500, "Relationship could not be created."
 							return
 						end
 					end
@@ -149,7 +149,7 @@ module JsonapiForRails::Controller
 						end
 					end
 
-					render_json @json
+					jsonapi_render @json
 				end
 
 				def update
@@ -157,7 +157,7 @@ module JsonapiForRails::Controller
 				end
 
 				def destroy
-					render_errors 500, "Not implemented."
+					jsonapi_render_errors 500, "Not implemented."
 				end
 
 				# private
@@ -166,7 +166,7 @@ module JsonapiForRails::Controller
 				# Use this for creating/updating a database record.
 				# Note that relationships (has_one associations etc) are filtered out
 				# but are still available in the original params.
-				def received_attributes
+				def jsonapi_received_attributes
 					begin
 						params.require(
 							:data
@@ -192,9 +192,10 @@ module JsonapiForRails::Controller
 					end
 				end
 
-				def relationships
+				# Definitions of all relationships for current model
+				def jsonapi_relationships
 					jsonapi_model_class.reflect_on_all_associations.collect do |association|
-						type = nil
+						#type = nil
 
 						type = :to_one if [
 							ActiveRecord::Reflection::HasOneReflection, 
@@ -212,7 +213,7 @@ module JsonapiForRails::Controller
 							name: association.name,
 							type: type,
 							receiver: {
-								type: association.klass.to_s.underscore.pluralize.to_sym,
+								type:  association.klass.to_s.underscore.pluralize.to_sym,
 								class: association.klass.to_s.constantize
 							}
 						}
@@ -220,28 +221,40 @@ module JsonapiForRails::Controller
 				end
 
 				# TODO: define a separate method for relationship actions (i.e. when params[:relationship] != nil)
-				def received_relationships
-					rels = relationships
-					if params[:relationship] # only one relationship received for relationship action
+				def jsonapi_received_relationships
+					# Relationship definitions for current model
+					rels = jsonapi_relationships
+
+					# Consider only current relationship for relationship actions
+					# (params[:relationship] contains the relationship name)
+					if params[:relationship] 
+
 						rels.select! do |rel|
 							rel[:name].to_sym == params[:relationship].to_sym
 						end
+
+						# If no relationship is received, then return the definition only
 						if request.method == "GET"
-							# no relationship received, return definition only
 							return rels.collect do |rel|
 								{definition: rel}
 							end
 						end
+
 					end
+
 					rels.collect do |relationship|
 						begin
 							received_params = nil
+
+							# Relationship action
 							if params[:relationship]
 								received_params =  params.permit({
 									data: [
 										:type, :id
 									]
 								})
+
+							# Object action
 							else
 								received_params =  params.require( 
 									:data
@@ -268,7 +281,7 @@ module JsonapiForRails::Controller
 										break
 									end
 									received_params[:data].each do |item|
-										next if item[:type] == relationship[:receiver][:type]
+										next if item[:type].to_sym == relationship[:receiver][:type]
 										conformant = false
 										break
 									end
@@ -331,9 +344,9 @@ module JsonapiForRails::Controller
 
 			def self.run_macros receiver
 				receiver.instance_exec do 
-					private :received_attributes
-					private :relationships
-					private :received_relationships
+					private :jsonapi_received_attributes
+					private :jsonapi_relationships
+					private :jsonapi_received_relationships
 				end
 			end
 
