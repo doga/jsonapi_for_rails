@@ -65,7 +65,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     json = JSON.parse response.body, symbolize_names: true
-    #$stderr.puts "#{json}" 
+    #$stderr.puts JSON.pretty_generate json
 
     assert          json,               "no json response"
     refute          json[:errors],      'response is error'
@@ -90,7 +90,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     #$stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
-    $stderr.puts JSON.pretty_generate json
+    #$stderr.puts JSON.pretty_generate json
     
     assert json
     assert json[:data]
@@ -106,7 +106,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     #$stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
-    #$stderr.puts "#{json}" 
+    #$stderr.puts JSON.pretty_generate json
     assert_equal 'authors', json[:data][:type], "bad type"
     author = Author.find(json[:data][:id])
     assert author
@@ -171,7 +171,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     #$stderr.puts "#{response.body}" 
     json = JSON.parse response.body, symbolize_names: true
-    #$stderr.puts "#{json}" 
+    #$stderr.puts JSON.pretty_generate json
 
     assert          json,               "no json response"
     refute          json[:errors],      'response is error'

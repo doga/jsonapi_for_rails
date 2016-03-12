@@ -34,7 +34,7 @@ $
 $ # Check the used version
 $ bin/rails console
 irb(main):001:0> JsonapiForRails::VERSION
-=> "0.2.0.pre"
+=> "0.2.0"
 irb(main):002:0> exit
 $
 ```
@@ -64,7 +64,10 @@ Then enable JSONAPI in a parent class of your API controllers.
 class ApplicationController < ActionController::Base # or ActionController::API
 
   # Enable JSONAPI
-  acts_as_jsonapi_resources
+  acts_as_jsonapi_resources(
+    # links:               false,
+    # content_negotiation: false
+  )
 
   # ...
 end
@@ -72,9 +75,11 @@ end
 
 `acts_as_jsonapi_resources` accepts the following keyword arguments:
 
-* `content_negotiation`: Set this to `false` to disable
-  [content negotiation](http://jsonapi.org/format/1.0/#content-negotiation).
-  Default value is `true`. Usage example: `acts_as_jsonapi_resources content_negotiation: false`
+* `links`: Setting this to `false` disables
+  [link generation](http://jsonapi.org/format/1.0/#document-links),
+  and speeds up your API. The default value is `true`.
+* `content_negotiation`: Setting this to `false` disables
+  [content negotiation](http://jsonapi.org/format/1.0/#content-negotiation). Again, this helps speed up your API, but at the expense of making your API non-JSONAPI-compliant, if only just). The default value is `true`. 
 
 If only some of your controllers are JSONAPI controllers, then create a parent controller for only those controllers, and enable JSONAPI inside that controller rather than `ApplicationController`. 
 
@@ -134,7 +139,7 @@ After populating your database and launching the built-in Rails server with the 
 
 ```bash
 $ # Get the list of articles
-$ # (the returned HTTP response body is short and terse, but it is prettified here for legibility)
+$ # (the returned HTTP response body is short and terse, but is prettified here for legibility)
 $ curl 'http://localhost:3000/api/v1/articles'
 {
   "data": [
@@ -146,7 +151,10 @@ $ curl 'http://localhost:3000/api/v1/articles'
       "type": "articles",
       "id": "994552601"
     }
-  ]
+  ],
+  "links": {
+    "self": "/api/v1/articles"
+  }
 }
 $ # Get an article
 $ curl 'http://localhost:3000/api/v1/articles/618037523'
@@ -167,6 +175,9 @@ $ curl 'http://localhost:3000/api/v1/articles/618037523'
           "id": "1023487079"
         }
       }
+    },
+    "links": {
+      "self": "/api/v1/articles/618037523"
     }
   }
 }
@@ -186,6 +197,9 @@ $ curl 'http://localhost:3000/api/v1/articles/618037523?filter%5Barticles%5D=tit
           "id": "1023487079"
         }
       }
+    },
+    "links": {
+      "self": "/api/v1/articles/618037523"
     }
   },
   "include": [
@@ -197,6 +211,9 @@ $ curl 'http://localhost:3000/api/v1/articles/618037523?filter%5Barticles%5D=tit
           "name": "Jill T..."
         },
         "relationships": {
+        },
+        "links": {
+          "self": "/api/v1/authors/1023487079"
         }
       }
     }
@@ -268,8 +285,12 @@ class ArticlesController < JsonapiResourcesController
 
   def index
     # These model-related utility methods are available inside all action methods.
-    jsonapi_model_class      # =>  Article
-    jsonapi_model_type       # => :articles
+    jsonapi_model_class # =>  Article
+    jsonapi_model_type  # => :articles
+
+    # @jsonapi_links indicates whether links should be included in response documents.
+    # It is available inside all action methods.
+    @jsonapi_links      # => true
 
     # ...
   end
@@ -310,7 +331,8 @@ The internal architecture is sound. Test coverage is currently being bulked up u
 
 Feature support roundup:
 
-* [Content negotiation](http://jsonapi.org/format/1.0/#content-negotiation) is not implemented.
+* [Content negotiation](http://jsonapi.org/format/1.0/#content-negotiation) is implemented and enabled by default, but can be disabled.
+* [Link generation](http://jsonapi.org/format/1.0/#document-links) is implemented and enabled by default, but can be disabled.
 * [Inclusion of related resources](http://jsonapi.org/format/1.0/#fetching-includes) is currently only implemented for requests that return a single resource, and relationship paths are not supported. 
 * [Sparse fieldsets](http://jsonapi.org/format/1.0/#fetching-sparse-fieldsets) is currently only implemented for requests that return a single resource. 
 * [Sorting](http://jsonapi.org/format/1.0/#fetching-sorting) is currently not implemented.

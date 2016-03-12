@@ -1,8 +1,8 @@
 
-# TODO: content negotiation tests
+# TODO: README: add instructions for using sparse fieldsets for setting the 
+#               set of attributes to return (ignore binaries etc)
 # TODO: apply sparse fieldsets _after_ including related resources
 # TODO: Location header
-# TODO: add 'links' to documents 
 # TODO: return conformant HTTP status codes
 # TODO: adding optional members to documents ('jsonapi', 'meta')
 # TODO: conformant and rich 'errors' member

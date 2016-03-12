@@ -29,6 +29,18 @@ module JsonapiForRails::Controller
 					end
 					@json = {data: @json}
 
+					# Links
+					if @jsonapi_links
+						record_path = self.send(
+							"#{jsonapi_model_type.to_s.singularize}_path",
+							@jsonapi_record.id
+						)
+
+						@json[:links] = {
+							self: "#{record_path}/relationships/#{@jsonapi_relationship[:definition][:name]}"
+						}
+					end
+
 					render_json @json
 				end
 
@@ -52,6 +64,8 @@ module JsonapiForRails::Controller
 
 					@jsonapi_record.send :"#{@jsonapi_relationship[:definition][:name]}=", related
 					@jsonapi_record.save
+
+					#self.send :relationship_show
 				end
 
 				# POST for to-many relations only
@@ -75,6 +89,8 @@ module JsonapiForRails::Controller
 					records.each do |record|
 						@jsonapi_record.send(@jsonapi_relationship[:definition][:name]) << record
 					end
+
+					#self.send :relationship_show
 				end
 
 				# DELETE for to-many relations only
@@ -99,6 +115,8 @@ module JsonapiForRails::Controller
 						@jsonapi_record.send(@jsonapi_relationship[:definition][:name]).delete record
 					end
 				end
+
+				#self.send :relationship_show
 			end
 
 			def self.run_macros receiver

@@ -7,4 +7,5 @@ class ApplicationController < ActionController::Base
     content_negotiation: false,
     links:               true
   )
+
 end

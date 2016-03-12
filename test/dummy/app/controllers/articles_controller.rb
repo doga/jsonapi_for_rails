@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
-  #before_action :log_request
-  #after_action  :log_response
+  before_action :log_request
+  after_action  :log_response
 
 =begin
   def index
@@ -10,7 +10,10 @@ class ArticlesController < ApplicationController
 
   private
     def log_request
-      #return unless request.fullpath.index('/relationships/tags')
+      return unless (
+        request.fullpath.index('/relationships/tags') and 
+        request.request_method == 'PATCH'
+      )
 
       $stderr.puts "/> > > > > > > > > > > > > > > > > > > > > >" 
       #$stderr.puts "before_action :test" 
@@ -41,7 +44,10 @@ class ArticlesController < ApplicationController
     end
 
     def log_response
-      #return unless request.fullpath.index('/relationships/tags')
+      return unless (
+        request.fullpath.index('/relationships/tags') and 
+        request.request_method == 'PATCH'
+      )
 
       $stderr.puts "< < < < < < < < <" 
       $stderr.puts "#{response.status}" 

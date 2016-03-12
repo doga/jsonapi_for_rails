@@ -17,6 +17,16 @@ module JsonapiForRails::Controller
 							id:   record.id.to_s
 						}
 					end
+
+					# Links
+					if @jsonapi_links
+						@json[:links] = {
+							self: self.send(
+								"#{jsonapi_model_type}_path" # TODO: factor out
+							)
+						}
+					end
+
 					render_json @json
 				end
 
