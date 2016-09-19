@@ -111,7 +111,7 @@ module JsonapiForRails::Controller
 					# Include resources
 					# TODO: relationship paths when including resources (http://jsonapi.org/format/1.0/#fetching-includes)
 					if @jsonapi_include and @json[:data][:relationships]
-						@json[:include] = []
+						@json[:included] = []
 						@jsonapi_include.each do |rel_name|
 							rel = @json[:data][:relationships][rel_name]
 							next unless rel
@@ -144,7 +144,7 @@ module JsonapiForRails::Controller
 									}
 								end
 
-								@json[:include] << r
+								@json[:included] << r
 							end
 						end
 					end
