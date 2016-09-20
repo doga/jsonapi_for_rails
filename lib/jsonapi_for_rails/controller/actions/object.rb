@@ -144,7 +144,7 @@ module JsonapiForRails::Controller
 									}
 								end
 
-								@json[:included] << r
+								@json[:included] << r[:data]
 							end
 						end
 					end
