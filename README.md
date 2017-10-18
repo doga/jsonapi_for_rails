@@ -24,8 +24,7 @@ $ # Go to the root directory of your existing Rails application
 $ cd path/to/railsapp
 $
 $ # Update the gem file
-$ cat >> Gemfile
-gem 'jsonapi_for_rails'
+$ echo "gem 'jsonapi_for_rails'" >> Gemfile
 $
 $ # Install
 $ # (Optional security paramater: --trust-policy MediumSecurity)
